@@ -1,0 +1,21 @@
+.highlight {
+  background-color: aqua;
+}
+
+.navbar-style {
+  background-color: rgb(4, 134, 36) !important;
+}
+
+.green-highlight {
+  color: rgb(4, 134, 36);
+  font-size: 40px;
+}
+
+.red-highlight {
+  color: red;
+  font-size: 25px;
+}
+
+.hand-icon {
+  cursor: pointer;
+}

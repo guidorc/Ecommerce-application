@@ -1,0 +1,181 @@
+\input texinfo @c -*-texinfo-*-
+@c %**start of header
+@set timeStamp Time-stamp: <2021-09-16 13:32:04 hilaire>
+@include ../bookSettings.texinfo
+@c %**end of header
+
+@copying
+This book is for @cuis{} (@value{cuisVersion}), a free and modern
+implementation of the Smalltalk language and environment.
+
+Copyright @copyright{} 2020, 2021 @writers{}
+@*
+@thanks{}
+@*
+
+@*
+Compilation : @today{}
+
+Documentation source: @url{https://github.com/Cuis-Smalltalk/TheCuisBook} 
+
+@*
+The contents of this book are protected under Creative Commons
+Attribution-ShareAlike 4.0 International.
+
+@i{You are free to:}
+@*
+@b{Share} -- copy and redistribute the material in any medium or
+format
+@*
+@b{Adapt} -- remix, transform, and build upon the material for any
+purpose, even commercially.
+
+@*
+@i{Under the following terms:}
+@*
+@b{Attribution.} You must give appropriate credit, provide a link to
+the license, and indicate if changes were made. You may do so in any
+reasonable manner, but not in any way that suggests the licensor
+endorses you or your use.
+@*
+@b{Share Alike.} If you remix, transform, or build upon the material,
+you must distribute your contributions under the same license as the
+original.
+
+Complete license: @url{https://creativecommons.org/licenses/by-sa/4.0/legalcode}
+
+@end copying
+
+@titlepage
+@title The @cuis{} book
+@subtitle Work-In-Progress
+@author @writers{}
+
+@iftex
+   @page
+   @vskip 0pt plus 1filll
+   @insertcopying
+@end iftex
+@end titlepage
+
+@iftex
+@shortcontents
+@contents
+@end iftex
+
+@node Top
+
+@ifnottex
+@quotation
+I like it... It's nice and clean and simple and pretty. Nice stuff!
+@author Alan Kay
+@end quotation
+
+Cuis is a free Smalltalk-80 environment with a specific set of goals:
+being simple and powerful. It is also portable to any platform, fast
+and efficient.
+@*
+
+You are reading the Cuis Book!
+
+@top Table of Contents
+@end ifnottex
+
+@menu
+* Preface::
+* Beginnings::
+* The Message Way of Life::
+* Class - Model of Communicating Entities::
+* The Collection Way of Life::
+* Control Flow Messaging::
+* Visual with Morph::
+* The Fundamentals of Morph::
+* Events::
+* Code Management::
+* Debug and Exception Handling::
+* Sharing Cuis::
+* Documents Copyright::
+* Summary of Syntax::
+* The Exercises::
+* Solutions to the Exercises::
+* The Examples::
+* The Figures::
+* Spacewar! Source Code::
+* Indexes::
+@end menu
+
+@ifnottex
+ @insertcopying
+@end ifnottex 
+
+@tex
+\global\parskip=0.5em
+@end tex
+
+@c================================================================
+@c Preface
+@include chapter-00/contents.texinfo
+@c================================================================
+@c:Part One
+@c @part Part One @*The basis of @cuis{}
+@c
+@include chapter-01/contents.texinfo
+@c
+@include chapter-02/contents.texinfo
+@c
+@include chapter-03/contents.texinfo
+@c
+@include chapter-04/contents.texinfo
+@c
+@include chapter-05/contents.texinfo
+@c
+@include chapter-06/contents.texinfo
+@c
+@include chapter-07/contents.texinfo
+@c
+@include chapter-08/contents.texinfo
+@c
+@include chapter-09/contents.texinfo
+@c
+@include chapter-10/contents.texinfo
+@c
+@include chapter-11/contents.texinfo
+@c================================================================
+@c: Part Four
+@c @part Part Four @*Appendices
+@c Copyrighted document used in the book
+@include copyrights.texinfo
+@c Summary of syntax
+@include syntaxSummary.texinfo
+@c List of exercises
+@node The Exercises
+@appendix The Exercises
+@listoffloats Exercise
+@c Solutions of exercises
+@include chapter-50/contents.texinfo
+@c List of examples
+@node The Examples
+@appendix The Examples
+@listoffloats Example
+@c List of figures
+@node The Figures
+@appendix The Figures
+@listoffloats Figure
+@c The Spacewar source code
+@node Spacewar! Source Code
+@appendix Spacewar! Source Code
+In the raw source code below, understand the ``_'' character as ``@assign{}''.
+@smallformat
+@verbatiminclude ../Spacewar!.pck.st
+@end smallformat
+@c Indexes
+@node Indexes
+@appendix Conceptual index
+@printindex cp
+@c================================================================
+@c: To be filled
+
+
+
+@c:END OF THE BOOK
+@bye

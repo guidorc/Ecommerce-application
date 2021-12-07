@@ -1,0 +1,1 @@
+vm\squeak-jit CuisUniversity-4972.image
