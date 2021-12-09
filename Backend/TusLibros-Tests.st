@@ -401,6 +401,17 @@ test19CanNotAddToCartWhenSessionIsExpired
 			self assert: (systemFacade listCartIdentifiedAs: cartId) isEmpty ]
 ! !
 
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart' stamp: 'GRC 12/8/2021 22:53:57'!
+test27CanAddItemsMultipleTimes
+
+	| cartId |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+
+	systemFacade add: 2 of: self validBook toCartIdentifiedAs: cartId.
+	systemFacade add: 3 of: self validBook toCartIdentifiedAs: cartId.
+		! !
+
 
 !TusLibrosSystemFacadeTest methodsFor: 'tests - list purchases' stamp: 'GRC 11/29/2021 10:07:29'!
 test14ListPurchasesIncludesBoughtItems
@@ -898,7 +909,7 @@ defaultCatalog
 		at: 'Silverschats' put: 500;
 		yourself ! !
 
-!StoreTestObjectsFactory methodsFor: 'catalogue' stamp: 'GRC 12/3/2021 22:37:39'!
+!StoreTestObjectsFactory methodsFor: 'catalogue' stamp: 'GRC 12/8/2021 18:40:03'!
 defaultCatalogReact
 
 	| rayuela elAleph elSur elTunel antesDelFin elReinoDelReves tutuMaramba bestiario |

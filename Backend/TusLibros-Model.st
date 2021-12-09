@@ -16,10 +16,10 @@ invalidQuantityErrorMessage
 	^self class invalidQuantityErrorMessage ! !
 
 
-!Cart methodsFor: 'assertions' stamp: 'GRC 12/8/2021 18:04:28'!
+!Cart methodsFor: 'assertions' stamp: 'GRC 12/8/2021 18:30:15'!
 assertIsValidItem: anItem
 	catalog do: [:aBook | 
-		((aBook at: 'titulo') = anItem) ifTrue: [^true].	
+		(aBook = anItem) ifTrue: [^true].	
 	].
 	^self signalInvalidItem.! !
 
@@ -84,29 +84,34 @@ add: anItem
 
 	^ self add: 1 of: anItem ! !
 
-!Cart methodsFor: 'adding' stamp: 'GRC 12/8/2021 18:22:56'!
+!Cart methodsFor: 'adding' stamp: 'GRC 12/8/2021 22:49:02'!
 add: aQuantity of: anItem
 
 	self assertIsValidQuantity: aQuantity.
 	self assertIsValidItem: anItem.
 	
 	anItem at: 'cantidad' put: aQuantity.
+	
+	items do: [:aBook |
+		((aBook at: 'titulo') = anItem at: 'titulo') ifTrue: [ |cantidad|
+			cantidad _ aBook at: 'cantidad' + aQuantity.
+			aBook at: 'cantidad' put: cantidad.
+			^'actualizado'
+		].	
+	].
 
 	items add: anItem.! !
 
 
-!Cart methodsFor: 'removing' stamp: 'GRC 11/29/2021 13:29:15'!
+!Cart methodsFor: 'removing' stamp: 'GRC 12/8/2021 22:39:12'!
 remove: aQuantity of: anItem
-
-	
 
 	self assertIsValidQuantity: aQuantity.
 	self assertIsValidItem: anItem.
 
-	aQuantity timesRepeat: [
-		items remove: anItem ifAbsent: [].
-	].
-
+	(items includes: anItem) ifFalse: [^self error: 'Libro no presente en carrito'].
+	
+	items remove: anItem.
 	
 	
 
@@ -226,10 +231,14 @@ checkOutCartWithCreditCardNumbered: aCreditCartNumber ownedBy: anOwner expiringO
 		
 	^result! !
 
-!CartSession methodsFor: 'cart' stamp: 'GRC 11/29/2021 12:52:18'!
-removeFromCart: anAmount of: aBook
+!CartSession methodsFor: 'cart' stamp: 'GRC 12/8/2021 22:33:29'!
+removeFromCart: anAmount of: aBookIsbn
 
-	^cart remove: anAmount of: aBook! !
+	| book |
+	
+	book _ systemFacade bookFor: aBookIsbn.
+
+	^cart remove: anAmount of: book.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 

@@ -31,6 +31,11 @@ class Producto extends Component {
           </div>
 
           <div className="card-footer">
+            <div className="float-left">
+              <span className="badge">
+                Cantidad: {this.state.producto.cantidad}
+              </span>
+            </div>
             <div className="float-right">{this.props.children}</div>
           </div>
         </div>

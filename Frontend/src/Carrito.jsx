@@ -22,8 +22,6 @@ class CarritoDeCompras extends Component {
               <Producto
                 key={prod.id}
                 producto={prod}
-                onIncrement={this.handleIncrement}
-                onDecrement={this.handleDecrement}
                 onDelete={this.handleDelete}
               ></Producto>
             );
@@ -57,38 +55,24 @@ class CarritoDeCompras extends Component {
     }
   };
 
-  handleIncrement = (producto) => {
-    let nuevosProductos = [...this.state.productos];
-    let indice = nuevosProductos.indexOf(producto);
-    nuevosProductos[indice].cantidad++;
-    this.setState({ productos: nuevosProductos });
-  };
-
-  handleDecrement = (producto) => {
-    let nuevosProductos = [...this.state.productos];
-    let indice = nuevosProductos.indexOf(producto);
-    let cantidadActual = nuevosProductos[indice].cantidad;
-    cantidadActual--;
-    nuevosProductos[indice].cantidad = Math.max(0, cantidadActual);
-    this.setState({ productos: nuevosProductos });
-  };
-
-  handleDelete = (producto) => {
+  handleDelete = async (producto) => {
     let nuevosProductos = [...this.state.productos];
     let indice = nuevosProductos.indexOf(producto);
 
     if (
       window.confirm("Está seguro que desea quitar el elemento del carrito?")
     ) {
+      /* request al servidor para quitar el producto del carrito */
+      var response = await fetch(
+        `http://localhost:8080/removeFromCart?cartId=${cartId.id}&bookIsbn=${producto.titulo}&bookQuantity=${producto.cantidad}`,
+        { method: "GET" }
+      );
       nuevosProductos.splice(indice, 1);
       this.setState({ productos: nuevosProductos });
     }
   };
 
   onBuyClick = (producto) => {};
-
-  addProduct = (producto) => {};
 }
 
 export default CarritoDeCompras;
-//export function addProduct(p);

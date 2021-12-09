@@ -60,7 +60,7 @@ class Login extends Component {
       { method: "GET" }
     );
 
-    if (response.status == 200) {
+    if (response.ok) {
       /* Login Valido */
       var id_del_carrito = await response.json();
       cartId.id = id_del_carrito;

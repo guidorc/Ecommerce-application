@@ -25,7 +25,11 @@ class Catalogo extends Component {
                 onIncrement={this.handleIncrement}
                 onDecrement={this.handleDecrement}
               >
-                <button className="btn btn-primary" onClick={this.onAddClick}>
+                <button
+                  className="btn btn-primary"
+                  /* Paso el parámetro así por ser un evento */
+                  onClick={() => this.onAddClick(prod)}
+                >
                   Añadir
                 </button>
               </Producto>
@@ -64,12 +68,17 @@ class Catalogo extends Component {
   };
 
   onAddClick = async (producto) => {
-    console.log(cartId.id);
-    console.log(producto);
+    /* Agregar el producto al carrito del usuario */
     var response = await fetch(
       `http://localhost:8080/addToCart?cartId=${cartId.id}&bookIsbn=${producto.titulo}&bookQuantity=${producto.cantidad}`,
       { method: "GET" }
     );
+
+    if (response.ok) {
+      window.alert("El elemento fué agregado con éxito!");
+    } else {
+      window.alert("El elemento no pudo agregarse al carrito.");
+    }
   };
 }
 

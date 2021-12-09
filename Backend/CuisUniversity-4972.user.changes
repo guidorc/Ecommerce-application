@@ -16571,3 +16571,197 @@ TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
 server _ TusLibrosRestInterface listeningOn: 8080.!
 
 ----QUIT----(8 December 2021 18:46:09) CuisUniversity-4972.image priorSource: 27721408!
+
+----STARTUP---- (8 December 2021 22:09:33) as C:\Users\Guido\Desktop\Git\e-commerce-site\Backend\CuisUniversity-4972.image!
+
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!CartSession methodsFor: 'cart' stamp: 'GRC 12/8/2021 22:33:29' prior: 51188698!
+removeFromCart: anAmount of: aBookIsbn
+
+	| book |
+	
+	book _ systemFacade bookFor: aBookIsbn.
+
+	^cart remove: anAmount of: book.! !
+!Cart methodsFor: 'removing' stamp: 'GRC 12/8/2021 22:36:44' prior: 51188583!
+remove: aQuantity of: anItem
+
+	| indice book |
+
+	self assertIsValidQuantity: aQuantity.
+	self assertIsValidItem: anItem.
+
+	indice _ items indexOf: anItem ifAbsent: [].
+	
+	book _ items at: indice
+	
+	
+
+	! !
+!Cart methodsFor: 'removing' stamp: 'GRC 12/8/2021 22:38:26' prior: 51198043!
+remove: aQuantity of: anItem
+
+	| indice |
+
+	self assertIsValidQuantity: aQuantity.
+	self assertIsValidItem: anItem.
+
+	indice _ items indexOf: anItem ifAbsent: [^self error: 'Libro no presente en carrito'].
+	
+	items remove: anItem.
+	
+	
+
+	! !
+!Cart methodsFor: 'removing' stamp: 'GRC 12/8/2021 22:39:07' prior: 51198052!
+remove: aQuantity of: anItem
+
+	
+
+	self assertIsValidQuantity: aQuantity.
+	self assertIsValidItem: anItem.
+
+	(items includes: anItem) ifFalse: [^self error: 'Libro no presente en carrito'].
+	
+	items remove: anItem.
+	
+	
+
+	! !
+!Cart methodsFor: 'removing' stamp: 'GRC 12/8/2021 22:39:12' prior: 51198062!
+remove: aQuantity of: anItem
+
+	self assertIsValidQuantity: aQuantity.
+	self assertIsValidItem: anItem.
+
+	(items includes: anItem) ifFalse: [^self error: 'Libro no presente en carrito'].
+	
+	items remove: anItem.
+	
+	
+
+	! !
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!Cart methodsFor: 'adding' stamp: 'GRC 12/8/2021 22:49:02' prior: 51197866!
+add: aQuantity of: anItem
+
+	self assertIsValidQuantity: aQuantity.
+	self assertIsValidItem: anItem.
+	
+	anItem at: 'cantidad' put: aQuantity.
+	
+	items do: [:aBook |
+		((aBook at: 'titulo') = anItem at: 'titulo') ifTrue: [ |cantidad|
+			cantidad _ aBook at: 'cantidad' + aQuantity.
+			aBook at: 'cantidad' put: cantidad.
+			^'actualizado'
+		].	
+	].
+
+	items add: anItem.! !
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart' stamp: 'GRC 12/8/2021 22:53:19'!
+test27CanAddItemsMultipleTimes
+
+	| cartId |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+
+	systemFacade add: 1 of: self validBook toCartIdentifiedAs: cartId.
+	self assert: ((systemFacade listCartIdentifiedAs: cartId) occurrencesOf: self validBook) equals: 1
+		! !
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart' stamp: 'GRC 12/8/2021 22:53:44' prior: 51198109!
+test27CanAddItemsMultipleTimes
+
+	| cartId |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+
+	systemFacade add: 2 of: self validBook toCartIdentifiedAs: cartId.
+	systemFacade add: 3 of: self validBook toCartIdentifiedAs: cartId.
+	self assert: ((systemFacade listCartIdentifiedAs: cartId) occurrencesOf: self validBook) equals: 1
+		! !
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart' stamp: 'GRC 12/8/2021 22:53:57' prior: 51198123!
+test27CanAddItemsMultipleTimes
+
+	| cartId |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+
+	systemFacade add: 2 of: self validBook toCartIdentifiedAs: cartId.
+	systemFacade add: 3 of: self validBook toCartIdentifiedAs: cartId.
+		! !
+
+----SNAPSHOT----(8 December 2021 22:54:00) CuisUniversity-4972.image priorSource: 27723865!
+
+!testRun: #TusLibrosSystemFacadeTest #test27CanAddItemsMultipleTimes stamp: 'GRC 12/8/2021 22:54:14'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test27CanAddItemsMultipleTimes stamp: 'GRC 12/8/2021 22:54:14'!
+ERROR!
+!Cart methodsFor: 'adding' stamp: 'GRC 12/8/2021 22:54:39' prior: 51198086!
+add: aQuantity of: anItem
+
+	self assertIsValidQuantity: aQuantity.
+	self assertIsValidItem: anItem.
+	
+	anItem at: 'cantidad' put: aQuantity.
+	
+	items do: [:aBook |
+		((aBook at: 'titulo') = (anItem at: 'titulo')) ifTrue: [ |cantidad|
+			cantidad _ aBook at: 'cantidad' + aQuantity.
+			aBook at: 'cantidad' put: cantidad.
+			^'actualizado'
+		].	
+	].
+
+	items add: anItem.! !
+
+!testRun: #TusLibrosSystemFacadeTest #test27CanAddItemsMultipleTimes stamp: 'GRC 12/8/2021 22:54:42'!
+ERROR!
+!Cart methodsFor: 'adding' stamp: 'GRC 12/8/2021 22:55:01' prior: 51198161!
+add: aQuantity of: anItem
+
+	self assertIsValidQuantity: aQuantity.
+	self assertIsValidItem: anItem.
+	
+	anItem at: 'cantidad' put: aQuantity.
+	
+	items do: [:aBook |
+		((aBook at: 'titulo') = (anItem at: 'titulo')) ifTrue: [ |cantidad|
+			cantidad _ (aBook at: 'cantidad') + aQuantity.
+			aBook at: 'cantidad' put: cantidad.
+			^'actualizado'
+		].	
+	].
+
+	items add: anItem.! !
+
+!testRun: #TusLibrosSystemFacadeTest #test27CanAddItemsMultipleTimes stamp: 'GRC 12/8/2021 22:55:02'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test27CanAddItemsMultipleTimes stamp: 'GRC 12/8/2021 22:55:04'!
+PASSED!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+----QUIT----(8 December 2021 22:57:08) CuisUniversity-4972.image priorSource: 27727996!
