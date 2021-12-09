@@ -1,4 +1,4 @@
-!classDefinition: #CartTest category: #'TusLibros-Tests'!
+!classDefinition: #CartTest category: 'TusLibros-Tests'!
 TestCase subclass: #CartTest
 	instanceVariableNames: 'testObjectsFactory'
 	classVariableNames: ''
@@ -98,7 +98,7 @@ setUp
 	testObjectsFactory := StoreTestObjectsFactory new.! !
 
 
-!classDefinition: #CashierTest category: #'TusLibros-Tests'!
+!classDefinition: #CashierTest category: 'TusLibros-Tests'!
 TestCase subclass: #CashierTest
 	instanceVariableNames: 'testObjectsFactory debitBehavior'
 	classVariableNames: ''
@@ -252,7 +252,7 @@ debit: anAmount from: aCreditCard
 	^debitBehavior value: anAmount value: aCreditCard ! !
 
 
-!classDefinition: #TusLibrosSystemFacadeTest category: #'TusLibros-Tests'!
+!classDefinition: #TusLibrosSystemFacadeTest category: 'TusLibros-Tests'!
 TestCase subclass: #TusLibrosSystemFacadeTest
 	instanceVariableNames: 'testObjectsFactory clock systemFacade'
 	classVariableNames: ''
@@ -441,7 +441,7 @@ test16CanNotListPurchasesOfValidCustomerWithInvalidPassword
 		withExceptionDo: [ :anError |
 			self assert: anError messageText equals: systemFacade invalidUserAndOrPasswordErrorDescription ]! !
 
-!TusLibrosSystemFacadeTest methodsFor: 'tests - list purchases' stamp: 'GRC 11/29/2021 10:06:11'!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - list purchases' stamp: 'GRC 12/8/2021 18:08:51'!
 test17ListPurchasesOnlyIncludesUserPurchases
 
 	| cartId cartId2 purchases |
@@ -470,7 +470,7 @@ test17ListPurchasesOnlyIncludesUserPurchases
 
 	self assert: (purchases at: self validBook) equals: 2.
 	self assert: (purchases at: self anotherValidBook) equals: 1.
-	self assert: (purchases at: 'total amount') equals: 35.! !
+	self assert: (purchases at: 'total amount') equals: 1650.! !
 
 !TusLibrosSystemFacadeTest methodsFor: 'tests - list purchases' stamp: 'GRC 11/15/2021 10:26:34'!
 test18CanListPurchasesOfUserWithNoPurchases
@@ -529,14 +529,14 @@ merchantProcessor
 
 	^self! !
 
-!TusLibrosSystemFacadeTest methodsFor: 'setup' stamp: 'GRC 11/29/2021 09:33:08'!
+!TusLibrosSystemFacadeTest methodsFor: 'setup' stamp: 'GRC 12/3/2021 20:53:20'!
 setUp
 
 	testObjectsFactory := StoreTestObjectsFactory new.
 	clock := ManualClock now: testObjectsFactory today.
 	systemFacade := TusLibrosSystemFacade
 		authenticatingWith: self validUsersAndPasswords
-		acceptingItemsOf: testObjectsFactory defaultCatalog
+		acceptingItemsOf: testObjectsFactory defaultCatalogReact
 		registeringOn: self createSalesBook
 		debitingThrought: self merchantProcessor
 		measuringTimeWith: clock
@@ -745,7 +745,7 @@ test08CanNotListCartOfInvalidCartId
 			self assert: anError messageText equals: systemFacade invalidCartIdErrorDescription ]
 	! !
 
-!TusLibrosSystemFacadeTest methodsFor: 'tests - list cart' stamp: 'HAW 11/26/2018 18:04:32'!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - list cart' stamp: 'GRC 12/8/2021 18:06:36'!
 test09ListCartReturnsTheRightNumberOfItems
 
 	| cartId cartContent |
@@ -786,97 +786,55 @@ revertTime: aDuration
 	clock revertTime: aDuration ! !
 
 
-!classDefinition: #ManualClock category: #'TusLibros-Tests'!
-Clock subclass: #ManualClock
-	instanceVariableNames: 'now'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'TusLibros-Tests'!
-
-!ManualClock methodsFor: 'time change' stamp: 'HernanWilkinson 6/22/2013 12:54'!
-advanceTime: aDuration
-
-	now := now + aDuration ! !
-
-!ManualClock methodsFor: 'time change' stamp: 'HernanWilkinson 6/22/2013 13:08'!
-revertTime: aDuration
-
-	now := now + aDuration negated ! !
-
-
-!ManualClock methodsFor: 'time' stamp: 'HernanWilkinson 6/22/2013 12:56'!
-now
-
-	^ now! !
-
-!ManualClock methodsFor: 'time' stamp: 'HernanWilkinson 6/22/2013 12:53'!
-today
-
-	^now date! !
-
-
-!ManualClock methodsFor: 'initialization' stamp: 'HernanWilkinson 6/22/2013 12:52'!
-initializeNow: aTime
-
-	now := aTime ! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'ManualClock class' category: #'TusLibros-Tests'!
-ManualClock class
-	instanceVariableNames: ''!
-
-!ManualClock class methodsFor: 'instance creation' stamp: 'HernanWilkinson 6/22/2013 12:52'!
-now: aTime
-
-	^self new initializeNow: aTime ! !
-
-
-!classDefinition: #StoreTestObjectsFactory category: #'TusLibros-Tests'!
+!classDefinition: #StoreTestObjectsFactory category: 'TusLibros-Tests'!
 Object subclass: #StoreTestObjectsFactory
 	instanceVariableNames: 'today'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros-Tests'!
 
-!StoreTestObjectsFactory methodsFor: 'items' stamp: 'HernanWilkinson 6/22/2013 00:16'!
+!StoreTestObjectsFactory methodsFor: 'items' stamp: 'GRC 12/8/2021 18:04:54'!
 anotherItemSellByTheStore
 
-	^'anotherValidBook'! !
+	^'El Aleph'! !
 
-!StoreTestObjectsFactory methodsFor: 'items' stamp: 'HernanWilkinson 6/22/2013 00:16'!
+!StoreTestObjectsFactory methodsFor: 'items' stamp: 'GRC 12/8/2021 18:05:12'!
 anotherItemSellByTheStorePrice
 
-	^15! !
+	^450! !
 
 !StoreTestObjectsFactory methodsFor: 'items' stamp: 'HernanWilkinson 6/17/2013 18:08'!
 itemNotSellByTheStore
 
 	^'invalidBook'! !
 
-!StoreTestObjectsFactory methodsFor: 'items' stamp: 'HernanWilkinson 6/17/2013 18:08'!
+!StoreTestObjectsFactory methodsFor: 'items' stamp: 'GRC 12/8/2021 18:05:02'!
 itemSellByTheStore
 
-	^ 'validBook'! !
+	^ 'Rayuela'! !
 
-!StoreTestObjectsFactory methodsFor: 'items' stamp: 'HernanWilkinson 6/17/2013 18:08'!
+!StoreTestObjectsFactory methodsFor: 'items' stamp: 'GRC 12/8/2021 18:05:07'!
 itemSellByTheStorePrice
 
-	^10! !
+	^600! !
+
+!StoreTestObjectsFactory methodsFor: 'items' stamp: 'GRC 12/3/2021 20:51:56'!
+libro: unTitulo con: unId autor: unAutor precio: unMonto cantidad: unaCantidad
+
+	^Dictionary new
+		at: 'id' put: unId;
+		at: 'titulo' put: unTitulo;
+		at: 'autor' put: unAutor;
+		at: 'precio' put: unMonto;
+		at: 'cantidad' put: unaCantidad;
+		yourself.
+		! !
 
 
 !StoreTestObjectsFactory methodsFor: 'cart' stamp: 'HernanWilkinson 6/17/2013 18:08'!
 createCart
 
 	^Cart acceptingItemsOf: self defaultCatalog! !
-
-!StoreTestObjectsFactory methodsFor: 'cart' stamp: 'GRC 11/29/2021 12:30:07'!
-defaultCatalog
-
-	^ Dictionary new
-		at: self itemSellByTheStore put: self itemSellByTheStorePrice;
-		at: self anotherItemSellByTheStore put: self anotherItemSellByTheStorePrice;
-		yourself ! !
 
 
 !StoreTestObjectsFactory methodsFor: 'credit card' stamp: 'HernanWilkinson 6/22/2013 11:24'!
@@ -926,3 +884,79 @@ today
 customer
 
 	^'aCustomer'! !
+
+
+!StoreTestObjectsFactory methodsFor: 'catalogue' stamp: 'GRC 12/1/2021 11:47:42'!
+defaultCatalog
+
+	^ Dictionary new
+		at: self itemSellByTheStore put: self itemSellByTheStorePrice;
+		at: self anotherItemSellByTheStore put: self anotherItemSellByTheStorePrice;
+		at: 'Rayuela' put: 350;
+		at: 'Narnia' put: 400;
+		at: 'Gaudi' put: 300;
+		at: 'Silverschats' put: 500;
+		yourself ! !
+
+!StoreTestObjectsFactory methodsFor: 'catalogue' stamp: 'GRC 12/3/2021 22:37:39'!
+defaultCatalogReact
+
+	| rayuela elAleph elSur elTunel antesDelFin elReinoDelReves tutuMaramba bestiario |
+	
+	rayuela _ self libro: 'Rayuela' con: 1 autor: 'Julio Cortazar' precio: 600 cantidad: 0.
+	bestiario _ self libro: 'Bestiario' con: 8 autor: 'Julio Cortazar' precio: 350 cantidad: 0.
+	elAleph _ self libro: 'El Aleph' con: 2 autor: 'Jorge L. Borges' precio: 450 cantidad: 0.
+	elSur _ self libro: 'El Sur' con: 3 autor: 'Jorge L. Borges' precio: 250 cantidad: 0.
+	antesDelFin _ self libro: 'Antes Del Fin' con: 4 autor: 'Ernesto Sábato' precio: 350 cantidad: 0.
+	elTunel _ self libro: 'El Túnel' con: 5 autor: 'Ernesto Sábato' precio: 400 cantidad: 0.
+	elReinoDelReves _ self libro: 'El Reino Del Revés' con: 6 autor: 'Maria E. Walsh' precio: 300 cantidad: 0.
+	tutuMaramba _ self libro: 'Tutú Marambá' con: 7 autor: 'Maria E. Walsh' precio: 200 cantidad: 0.
+	
+
+	^ {rayuela. bestiario. elAleph. elSur. antesDelFin. elTunel. elReinoDelReves. tutuMaramba.}! !
+
+
+!classDefinition: #ManualClock category: 'TusLibros-Tests'!
+ProtoObject subclass: #ManualClock
+	instanceVariableNames: 'now'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros-Tests'!
+
+!ManualClock methodsFor: 'time change' stamp: 'HernanWilkinson 6/22/2013 12:54'!
+advanceTime: aDuration
+
+	now := now + aDuration ! !
+
+!ManualClock methodsFor: 'time change' stamp: 'HernanWilkinson 6/22/2013 13:08'!
+revertTime: aDuration
+
+	now := now + aDuration negated ! !
+
+
+!ManualClock methodsFor: 'time' stamp: 'HernanWilkinson 6/22/2013 12:56'!
+now
+
+	^ now! !
+
+!ManualClock methodsFor: 'time' stamp: 'HernanWilkinson 6/22/2013 12:53'!
+today
+
+	^now date! !
+
+
+!ManualClock methodsFor: 'initialization' stamp: 'HernanWilkinson 6/22/2013 12:52'!
+initializeNow: aTime
+
+	now := aTime ! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'ManualClock class' category: 'TusLibros-Tests'!
+ManualClock class
+	instanceVariableNames: ''!
+
+!ManualClock class methodsFor: 'instance creation' stamp: 'HernanWilkinson 6/22/2013 12:52'!
+now: aTime
+
+	^self new initializeNow: aTime ! !

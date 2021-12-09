@@ -15509,3 +15509,1065 @@ server _ TusLibrosRestInterface listeningOn: 8080.!
 TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
 
 ----QUIT----(7 December 2021 14:50:49) CuisUniversity-4972.image priorSource: 27494035!
+
+----STARTUP---- (8 December 2021 14:11:07) as C:\Users\Guido\Desktop\Git\e-commerce-site\Backend\CuisUniversity-4972.image!
+
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!TusLibrosSystemFacade methodsFor: 'cart session management' stamp: 'GRC 12/8/2021 14:23:28' prior: 51189438!
+generateCartId
+
+	"Recuerden que esto es un ejemplo, por lo que voy a generar ids numericos consecutivos, pero en una
+	implementacion real no deberian se numeros consecutivos ni nada que genere problemas de seguridad - Hernan"
+
+	lastId := lastId + 1.
+	^lastId! !
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+!testRun: #TusLibrosSystemFacadeTest #test05CanNotAddItemToNotCreatedCart stamp: 'GRC 12/8/2021 14:33:38'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test01CanCreateCartWithValidUserAndPassword stamp: 'GRC 12/8/2021 14:33:38'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test02CanNotCreateCartWithInvalidUser stamp: 'GRC 12/8/2021 14:33:38'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test03CanNotCreateCartWithInvalidPassword stamp: 'GRC 12/8/2021 14:33:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'GRC 12/8/2021 14:33:39'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test05CanNotAddItemToNotCreatedCart stamp: 'GRC 12/8/2021 14:33:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotAddItemNotSellByTheStore stamp: 'GRC 12/8/2021 14:33:39'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test07ListCartOfAnEmptyCartReturnsAnEmptyBag stamp: 'GRC 12/8/2021 14:33:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test08CanNotListCartOfInvalidCartId stamp: 'GRC 12/8/2021 14:33:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'GRC 12/8/2021 14:33:39'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'GRC 12/8/2021 14:33:39'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test11CanNotCheckoutANotCreatedCart stamp: 'GRC 12/8/2021 14:33:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test12CanNotCheckoutAnEmptyCart stamp: 'GRC 12/8/2021 14:33:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test13CanNotCheckoutWithAnExpiredCreditCard stamp: 'GRC 12/8/2021 14:33:39'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'GRC 12/8/2021 14:33:39'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test15CanNotListPurchasesOfInvalidCustomer stamp: 'GRC 12/8/2021 14:33:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test16CanNotListPurchasesOfValidCustomerWithInvalidPassword stamp: 'GRC 12/8/2021 14:33:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17ListPurchasesOnlyIncludesUserPurchases stamp: 'GRC 12/8/2021 14:33:39'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanListPurchasesOfUserWithNoPurchases stamp: 'GRC 12/8/2021 14:33:39'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanNotListCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 14:33:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test19CanNotAddToCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 14:33:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test20CanCheckoutACart stamp: 'GRC 12/8/2021 14:33:39'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test21CanNotCheckOutCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 14:33:39'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test22CanRemoveItemsFromACreatedCart stamp: 'GRC 12/8/2021 14:33:39'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test23CanNotRemoveItemFromNotCreatedCart stamp: 'GRC 12/8/2021 14:33:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test24CanNotRemoveFromCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 14:33:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test24CanNotRemoveItemNotSellByTheStore stamp: 'GRC 12/8/2021 14:33:39'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test25CanRemoveItemMultipleTimes stamp: 'GRC 12/8/2021 14:33:39'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test26CanNotRemoveItemsMoreTimesThanItAppears stamp: 'GRC 12/8/2021 14:33:39'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test27CheckedOutCartIsEmpty stamp: 'GRC 12/8/2021 14:33:39'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'GRC 12/8/2021 14:33:50'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'GRC 12/8/2021 14:35:09'!
+ERROR!
+!Cart methodsFor: 'assertions' stamp: 'GRC 12/8/2021 14:37:18' prior: 51188520!
+assertIsValidItem: anItem
+	catalog do: [:aBook | 
+		(aBook at: 'titulo' = anItem) ifTrue: [^true].	
+	].
+	^self signalInvalidItem.! !
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'GRC 12/8/2021 14:37:20'!
+ERROR!
+!StoreTestObjectsFactory methodsFor: 'items' stamp: 'GRC 12/8/2021 14:37:50' prior: 51188426!
+itemSellByTheStore
+
+	^ 'Rayuela'! !
+!StoreTestObjectsFactory methodsFor: 'items' stamp: 'GRC 12/8/2021 14:38:16' prior: 51188411!
+anotherItemSellByTheStore
+
+	^'El Aleph'! !
+!StoreTestObjectsFactory methodsFor: 'items' stamp: 'GRC 12/8/2021 14:38:32' prior: 51188430!
+itemSellByTheStorePrice
+
+	^600! !
+!StoreTestObjectsFactory methodsFor: 'items' stamp: 'GRC 12/8/2021 14:38:34' prior: 51191019!
+itemSellByTheStorePrice
+
+	^600! !
+!StoreTestObjectsFactory methodsFor: 'items' stamp: 'GRC 12/8/2021 14:38:40' prior: 51188416!
+anotherItemSellByTheStorePrice
+
+	^450! !
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'GRC 12/8/2021 14:38:45'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'GRC 12/8/2021 14:38:51'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'GRC 12/8/2021 14:38:51'!
+ERROR!
+!Cart methodsFor: 'assertions' stamp: 'GRC 12/8/2021 14:39:50' prior: 51190998!
+assertIsValidItem: anItem
+	catalog do: [:aBook | 
+		((aBook at: 'titulo') = anItem) ifTrue: [^true].	
+	].
+	^self signalInvalidItem.! !
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'GRC 12/8/2021 14:39:52'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test01CanCreateCartWithValidUserAndPassword stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test02CanNotCreateCartWithInvalidUser stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test03CanNotCreateCartWithInvalidPassword stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test05CanNotAddItemToNotCreatedCart stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotAddItemNotSellByTheStore stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test07ListCartOfAnEmptyCartReturnsAnEmptyBag stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test08CanNotListCartOfInvalidCartId stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'GRC 12/8/2021 14:39:55'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test11CanNotCheckoutANotCreatedCart stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test12CanNotCheckoutAnEmptyCart stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test13CanNotCheckoutWithAnExpiredCreditCard stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'GRC 12/8/2021 14:39:55'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test15CanNotListPurchasesOfInvalidCustomer stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test16CanNotListPurchasesOfValidCustomerWithInvalidPassword stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17ListPurchasesOnlyIncludesUserPurchases stamp: 'GRC 12/8/2021 14:39:55'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanListPurchasesOfUserWithNoPurchases stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanNotListCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test19CanNotAddToCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test20CanCheckoutACart stamp: 'GRC 12/8/2021 14:39:55'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test21CanNotCheckOutCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test22CanRemoveItemsFromACreatedCart stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test23CanNotRemoveItemFromNotCreatedCart stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test24CanNotRemoveFromCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test24CanNotRemoveItemNotSellByTheStore stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test25CanRemoveItemMultipleTimes stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test26CanNotRemoveItemsMoreTimesThanItAppears stamp: 'GRC 12/8/2021 14:39:55'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test27CheckedOutCartIsEmpty stamp: 'GRC 12/8/2021 14:39:55'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'GRC 12/8/2021 14:39:59'!
+ERROR!
+!Cashier methodsFor: 'checkout - private' stamp: 'GRC 12/8/2021 14:42:02' prior: 51188767!
+totalOf: anItem quantity: aQuantity
+	cart catalog do: [:aBook |
+		((aBook at: 'titulo') = anItem) ifTrue: [
+			^(aBook at: 'precio') * aQuantity.	
+		].	
+	].
+	^(cart catalog at: anItem) * aQuantity  ! !
+!Cashier methodsFor: 'checkout - private' stamp: 'GRC 12/8/2021 14:42:06' prior: 51191169!
+totalOf: anItem quantity: aQuantity
+	cart catalog do: [:aBook |
+		((aBook at: 'titulo') = anItem) ifTrue: [
+			^(aBook at: 'precio') * aQuantity.	
+		].	
+	].! !
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'GRC 12/8/2021 14:42:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'GRC 12/8/2021 14:42:11'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17ListPurchasesOnlyIncludesUserPurchases stamp: 'GRC 12/8/2021 14:42:13'!
+FAILURE!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - list purchases' stamp: 'GRC 12/8/2021 14:42:22' prior: 51187939!
+test17ListPurchasesOnlyIncludesUserPurchases
+
+	| cartId cartId2 purchases |
+
+	cartId _ systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	cartId2 _ systemFacade createCartFor: self anotherValidUser authenticatedWith: self validUserPassword. 
+	
+	systemFacade add: 2 of: self validBook toCartIdentifiedAs: cartId.
+	systemFacade add: 1 of: self anotherValidBook toCartIdentifiedAs: cartId.
+	
+	systemFacade add: 2 of: self validBook toCartIdentifiedAs: cartId2.
+	
+	systemFacade
+		checkOutCartIdentifiedAs: cartId
+		withCreditCardNumbered: '1111222233334444'
+		ownedBy: 'Juan Perez'
+		expiringOn: testObjectsFactory notExpiredMonthOfYear.
+		
+	systemFacade
+		checkOutCartIdentifiedAs: cartId2
+		withCreditCardNumbered: '1111222233334444'
+		ownedBy: 'Juan Perez'
+		expiringOn: testObjectsFactory notExpiredMonthOfYear.
+
+	purchases := systemFacade listPurchasesOf: self validUser authenticatingWith: self validUserPassword.
+
+	self assert: (purchases at: self validBook) equals: 2.
+	self assert: (purchases at: self anotherValidBook) equals: 1.
+	self assert: (purchases at: 'total amount') equals: 1650.! !
+
+!testRun: #TusLibrosSystemFacadeTest #test17ListPurchasesOnlyIncludesUserPurchases stamp: 'GRC 12/8/2021 14:42:23'!
+FAILURE!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'GRC 12/8/2021 14:42:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test01CanCreateCartWithValidUserAndPassword stamp: 'GRC 12/8/2021 14:42:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test02CanNotCreateCartWithInvalidUser stamp: 'GRC 12/8/2021 14:42:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test03CanNotCreateCartWithInvalidPassword stamp: 'GRC 12/8/2021 14:42:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'GRC 12/8/2021 14:42:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test05CanNotAddItemToNotCreatedCart stamp: 'GRC 12/8/2021 14:42:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotAddItemNotSellByTheStore stamp: 'GRC 12/8/2021 14:42:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test07ListCartOfAnEmptyCartReturnsAnEmptyBag stamp: 'GRC 12/8/2021 14:42:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test08CanNotListCartOfInvalidCartId stamp: 'GRC 12/8/2021 14:42:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test11CanNotCheckoutANotCreatedCart stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test12CanNotCheckoutAnEmptyCart stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test13CanNotCheckoutWithAnExpiredCreditCard stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test15CanNotListPurchasesOfInvalidCustomer stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test16CanNotListPurchasesOfValidCustomerWithInvalidPassword stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17ListPurchasesOnlyIncludesUserPurchases stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanListPurchasesOfUserWithNoPurchases stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanNotListCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test19CanNotAddToCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test20CanCheckoutACart stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test21CanNotCheckOutCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test22CanRemoveItemsFromACreatedCart stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test23CanNotRemoveItemFromNotCreatedCart stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test24CanNotRemoveFromCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test24CanNotRemoveItemNotSellByTheStore stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test25CanRemoveItemMultipleTimes stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test26CanNotRemoveItemsMoreTimesThanItAppears stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test27CheckedOutCartIsEmpty stamp: 'GRC 12/8/2021 14:42:40'!
+PASSED!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - list cart' stamp: 'GRC 12/8/2021 14:54:29' prior: 51188305!
+test09ListCartReturnsTheRightNumberOfItems
+
+	| cartId cartContent |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	systemFacade add: 1 of: self validBook toCartIdentifiedAs: cartId.
+	systemFacade add: 2 of: self anotherValidBook toCartIdentifiedAs: cartId.
+	cartContent := systemFacade listCartIdentifiedAs: cartId.
+
+	self assert: (cartContent occurrencesOf: self validBook) equals: 1.
+	self assert: (cartContent occurrencesOf: self anotherValidBook) equals: 2
+! !
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 12/8/2021 15:04:39' prior: 51190772!
+listCartAction: aRequest	
+	[ | cartId result cartContent resultDict |
+		cartId := (aRequest fields at: 'cartId') asNumber.
+		
+		cartContent := tusLibros listCartIdentifiedAs: cartId.
+
+		resultDict := Dictionary new.
+		cartContent contents keysAndValuesDo: [ :anItem :aQuantity | resultDict add: anItem->aQuantity ].
+		resultDict := {resultDict}.
+		result := WebUtils jsonEncode: resultDict.
+		
+		aRequest send200Response: result
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].
+	 ] 
+		on: Error 
+		do: [ :anError | aRequest sendResponseCode: 400 content: (anError messageText) type: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].  ]! !
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!CartSession methodsFor: 'cart' stamp: 'GRC 12/8/2021 17:53:05' prior: 51188679!
+cartContent
+
+	^cart content! !
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+----End fileIn of C:\Users\Guido\Desktop\Git\e-commerce-site\Backend\Packages\TerseGuide.pck.st----!
+!Cart methodsFor: 'content' stamp: 'GRC 12/8/2021 17:56:59' prior: 51188535!
+content
+
+	^items copy! !
+!Cart methodsFor: 'content' stamp: 'GRC 12/8/2021 17:57:04' prior: 51188532!
+catalog
+
+	^ catalog! !
+!Cart methodsFor: 'content' stamp: 'GRC 12/8/2021 17:57:08' prior: 51188545!
+occurrencesOf: anItem
+
+	^items occurrencesOf: anItem  ! !
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'GRC 12/8/2021 18:02:03'!
+PASSED!
+
+----STARTUP---- (8 December 2021 18:02:27) as C:\Users\Guido\Desktop\Git\e-commerce-site\Backend\CuisUniversity-4972.image!
+
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - list cart' stamp: 'GRC 12/8/2021 18:02:56' prior: 51188305!
+test09ListCartReturnsTheRightNumberOfItems
+
+	| cartId cartContent |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	systemFacade add: 1 of: self validBook toCartIdentifiedAs: cartId.
+	systemFacade add: 2 of: self anotherValidBook toCartIdentifiedAs: cartId.
+	cartContent := systemFacade listCartIdentifiedAs: cartId.
+
+	self assert: (cartContent occurrencesOf: self validBook) equals: 1.
+	self assert: (cartContent occurrencesOf: self anotherValidBook) equals: 2
+! !
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'GRC 12/8/2021 18:03:02'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'GRC 12/8/2021 18:03:02'!
+ERROR!
+
+----SNAPSHOT----(8 December 2021 18:03:09) CuisUniversity-4972.image priorSource: 27494365!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'GRC 12/8/2021 18:03:15'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'GRC 12/8/2021 18:03:15'!
+ERROR!
+!Cart methodsFor: 'assertions' stamp: 'GRC 12/8/2021 18:04:28' prior: 51188520!
+assertIsValidItem: anItem
+	catalog do: [:aBook | 
+		((aBook at: 'titulo') = anItem) ifTrue: [^true].	
+	].
+	^self signalInvalidItem.! !
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'GRC 12/8/2021 18:04:30'!
+ERROR!
+
+----SNAPSHOT----(8 December 2021 18:04:39) CuisUniversity-4972.image priorSource: 27608344!
+!StoreTestObjectsFactory methodsFor: 'items' stamp: 'GRC 12/8/2021 18:04:54' prior: 51188411!
+anotherItemSellByTheStore
+
+	^'El Aleph'! !
+!StoreTestObjectsFactory methodsFor: 'items' stamp: 'GRC 12/8/2021 18:05:02' prior: 51188426!
+itemSellByTheStore
+
+	^ 'Rayuela'! !
+!StoreTestObjectsFactory methodsFor: 'items' stamp: 'GRC 12/8/2021 18:05:07' prior: 51188430!
+itemSellByTheStorePrice
+
+	^600! !
+!StoreTestObjectsFactory methodsFor: 'items' stamp: 'GRC 12/8/2021 18:05:12' prior: 51188416!
+anotherItemSellByTheStorePrice
+
+	^450! !
+
+----SNAPSHOT----(8 December 2021 18:05:14) CuisUniversity-4972.image priorSource: 27609026!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'GRC 12/8/2021 18:05:21'!
+PASSED!
+
+----SNAPSHOT----(8 December 2021 18:05:27) CuisUniversity-4972.image priorSource: 27609738!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - list cart' stamp: 'GRC 12/8/2021 18:06:12' prior: 51194385!
+test09ListCartReturnsTheRightNumberOfItems
+
+	| cartId cartContent |
+
+	self halt.
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	systemFacade add: 1 of: self validBook toCartIdentifiedAs: cartId.
+	systemFacade add: 2 of: self anotherValidBook toCartIdentifiedAs: cartId.
+	cartContent := systemFacade listCartIdentifiedAs: cartId.
+
+	self assert: (cartContent occurrencesOf: self validBook) equals: 1.
+	self assert: (cartContent occurrencesOf: self anotherValidBook) equals: 2
+! !
+!TusLibrosSystemFacadeTest methodsFor: 'tests - list cart' stamp: 'GRC 12/8/2021 18:06:36' prior: 51194466!
+test09ListCartReturnsTheRightNumberOfItems
+
+	| cartId cartContent |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	systemFacade add: 1 of: self validBook toCartIdentifiedAs: cartId.
+	systemFacade add: 2 of: self anotherValidBook toCartIdentifiedAs: cartId.
+	cartContent := systemFacade listCartIdentifiedAs: cartId.
+
+	self assert: (cartContent occurrencesOf: self validBook) equals: 1.
+	self assert: (cartContent occurrencesOf: self anotherValidBook) equals: 2
+! !
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'GRC 12/8/2021 18:06:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test01CanCreateCartWithValidUserAndPassword stamp: 'GRC 12/8/2021 18:06:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test02CanNotCreateCartWithInvalidUser stamp: 'GRC 12/8/2021 18:06:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test03CanNotCreateCartWithInvalidPassword stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test05CanNotAddItemToNotCreatedCart stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotAddItemNotSellByTheStore stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test07ListCartOfAnEmptyCartReturnsAnEmptyBag stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test08CanNotListCartOfInvalidCartId stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'GRC 12/8/2021 18:06:40'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test11CanNotCheckoutANotCreatedCart stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test12CanNotCheckoutAnEmptyCart stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test13CanNotCheckoutWithAnExpiredCreditCard stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'GRC 12/8/2021 18:06:40'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test15CanNotListPurchasesOfInvalidCustomer stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test16CanNotListPurchasesOfValidCustomerWithInvalidPassword stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17ListPurchasesOnlyIncludesUserPurchases stamp: 'GRC 12/8/2021 18:06:40'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanListPurchasesOfUserWithNoPurchases stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanNotListCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test19CanNotAddToCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test20CanCheckoutACart stamp: 'GRC 12/8/2021 18:06:40'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test21CanNotCheckOutCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test22CanRemoveItemsFromACreatedCart stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test23CanNotRemoveItemFromNotCreatedCart stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test24CanNotRemoveFromCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test24CanNotRemoveItemNotSellByTheStore stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test25CanRemoveItemMultipleTimes stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test26CanNotRemoveItemsMoreTimesThanItAppears stamp: 'GRC 12/8/2021 18:06:40'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test27CheckedOutCartIsEmpty stamp: 'GRC 12/8/2021 18:06:40'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'GRC 12/8/2021 18:06:45'!
+ERROR!
+!Cashier methodsFor: 'checkout - private' stamp: 'GRC 12/8/2021 18:08:34' prior: 51188767!
+totalOf: anItem quantity: aQuantity
+	cart catalog do: [:aBook |
+		((aBook at: 'titulo') = anItem) ifTrue: [
+			^(aBook at: 'precio') * aQuantity.	
+		].	
+	].! !
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'GRC 12/8/2021 18:08:39'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'GRC 12/8/2021 18:08:41'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17ListPurchasesOnlyIncludesUserPurchases stamp: 'GRC 12/8/2021 18:08:42'!
+FAILURE!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - list purchases' stamp: 'GRC 12/8/2021 18:08:51' prior: 51187939!
+test17ListPurchasesOnlyIncludesUserPurchases
+
+	| cartId cartId2 purchases |
+
+	cartId _ systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	cartId2 _ systemFacade createCartFor: self anotherValidUser authenticatedWith: self validUserPassword. 
+	
+	systemFacade add: 2 of: self validBook toCartIdentifiedAs: cartId.
+	systemFacade add: 1 of: self anotherValidBook toCartIdentifiedAs: cartId.
+	
+	systemFacade add: 2 of: self validBook toCartIdentifiedAs: cartId2.
+	
+	systemFacade
+		checkOutCartIdentifiedAs: cartId
+		withCreditCardNumbered: '1111222233334444'
+		ownedBy: 'Juan Perez'
+		expiringOn: testObjectsFactory notExpiredMonthOfYear.
+		
+	systemFacade
+		checkOutCartIdentifiedAs: cartId2
+		withCreditCardNumbered: '1111222233334444'
+		ownedBy: 'Juan Perez'
+		expiringOn: testObjectsFactory notExpiredMonthOfYear.
+
+	purchases := systemFacade listPurchasesOf: self validUser authenticatingWith: self validUserPassword.
+
+	self assert: (purchases at: self validBook) equals: 2.
+	self assert: (purchases at: self anotherValidBook) equals: 1.
+	self assert: (purchases at: 'total amount') equals: 1650.! !
+
+!testRun: #TusLibrosSystemFacadeTest #test17ListPurchasesOnlyIncludesUserPurchases stamp: 'GRC 12/8/2021 18:08:53'!
+FAILURE!
+
+----SNAPSHOT----(8 December 2021 18:08:57) CuisUniversity-4972.image priorSource: 27609954!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test01CanCreateCartWithValidUserAndPassword stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test02CanNotCreateCartWithInvalidUser stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test03CanNotCreateCartWithInvalidPassword stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test05CanNotAddItemToNotCreatedCart stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotAddItemNotSellByTheStore stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test07ListCartOfAnEmptyCartReturnsAnEmptyBag stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test08CanNotListCartOfInvalidCartId stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test11CanNotCheckoutANotCreatedCart stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test12CanNotCheckoutAnEmptyCart stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test13CanNotCheckoutWithAnExpiredCreditCard stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test15CanNotListPurchasesOfInvalidCustomer stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test16CanNotListPurchasesOfValidCustomerWithInvalidPassword stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17ListPurchasesOnlyIncludesUserPurchases stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanListPurchasesOfUserWithNoPurchases stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanNotListCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test19CanNotAddToCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test20CanCheckoutACart stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test21CanNotCheckOutCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 18:09:04'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test22CanRemoveItemsFromACreatedCart stamp: 'GRC 12/8/2021 18:09:05'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test23CanNotRemoveItemFromNotCreatedCart stamp: 'GRC 12/8/2021 18:09:05'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test24CanNotRemoveFromCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 18:09:05'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test24CanNotRemoveItemNotSellByTheStore stamp: 'GRC 12/8/2021 18:09:05'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test25CanRemoveItemMultipleTimes stamp: 'GRC 12/8/2021 18:09:05'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test26CanNotRemoveItemsMoreTimesThanItAppears stamp: 'GRC 12/8/2021 18:09:05'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test27CheckedOutCartIsEmpty stamp: 'GRC 12/8/2021 18:09:05'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test01CanCreateCartWithValidUserAndPassword stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test02CanNotCreateCartWithInvalidUser stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test03CanNotCreateCartWithInvalidPassword stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test05CanNotAddItemToNotCreatedCart stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test06CanNotAddItemNotSellByTheStore stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test07ListCartOfAnEmptyCartReturnsAnEmptyBag stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test08CanNotListCartOfInvalidCartId stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test10CanCheckoutACart stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test11CanNotCheckoutANotCreatedCart stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test12CanNotCheckoutAnEmptyCart stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test13CanNotCheckoutWithAnExpiredCreditCard stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test14ListPurchasesIncludesBoughtItems stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test15CanNotListPurchasesOfInvalidCustomer stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test16CanNotListPurchasesOfValidCustomerWithInvalidPassword stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test17ListPurchasesOnlyIncludesUserPurchases stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanListPurchasesOfUserWithNoPurchases stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test18CanNotListCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test19CanNotAddToCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test20CanCheckoutACart stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test21CanNotCheckOutCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test22CanRemoveItemsFromACreatedCart stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test23CanNotRemoveItemFromNotCreatedCart stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test24CanNotRemoveFromCartWhenSessionIsExpired stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test24CanNotRemoveItemNotSellByTheStore stamp: 'GRC 12/8/2021 18:09:07'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test25CanRemoveItemMultipleTimes stamp: 'GRC 12/8/2021 18:09:08'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test26CanNotRemoveItemsMoreTimesThanItAppears stamp: 'GRC 12/8/2021 18:09:08'!
+PASSED!
+
+!testRun: #TusLibrosSystemFacadeTest #test27CheckedOutCartIsEmpty stamp: 'GRC 12/8/2021 18:09:08'!
+PASSED!
+!CartSession methodsFor: 'cart' stamp: 'GRC 12/8/2021 18:11:53' prior: 51188674!
+addToCart: anAmount of: aBookIsbn
+
+	| book |
+	
+	book _ systemFacade bookFor: aBookIsbn.
+
+	^cart add: anAmount of: book.! !
+!TusLibrosSystemFacade methodsFor: 'cart session management' stamp: 'GRC 12/8/2021 18:12:39'!
+bookFor: aBookIsbn
+
+	^catalog bookFor: aBookIsbn.! !
+!TusLibrosSystemFacade methodsFor: 'cart session management' stamp: 'GRC 12/8/2021 18:14:24' prior: 51194920!
+bookFor: aBookIsbn
+
+	catalog do: [:aBook |
+		((aBook at: 'titulo') = aBookIsbn) ifTrue: [^aBook].	
+	].! !
+
+----End fileIn of C:\Users\Guido\Desktop\Git\e-commerce-site\Backend\Packages\TerseGuide.pck.st----!
+!Cart methodsFor: 'initialization' stamp: 'GRC 12/8/2021 18:16:13' prior: 51188550!
+initializeAcceptingItemsOf: aCatalog
+
+	catalog := aCatalog.
+	items := OrderedCollection new.! !
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!Cart methodsFor: 'adding' stamp: 'GRC 12/8/2021 18:22:56' prior: 51188576!
+add: aQuantity of: anItem
+
+	self assertIsValidQuantity: aQuantity.
+	self assertIsValidItem: anItem.
+	
+	anItem at: 'cantidad' put: aQuantity.
+
+	items add: anItem.! !
+
+----SNAPSHOT----(8 December 2021 18:23:02) CuisUniversity-4972.image priorSource: 27617035!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 12/8/2021 18:25:15' prior: 51190772!
+listCartAction: aRequest	
+	[ | cartId result cartContent resultDict |
+		cartId := (aRequest fields at: 'cartId') asNumber.
+		
+		cartContent := tusLibros listCartIdentifiedAs: cartId.
+
+		"resultDict := Dictionary new.
+		cartContent contents keysAndValuesDo: [ :anItem :aQuantity | resultDict add: anItem->aQuantity ].
+		result := WebUtils jsonEncode: resultDict."
+		
+		result := WebUtils jsonEncode: cartContent.
+		
+		aRequest send200Response: result
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].
+	 ] 
+		on: Error 
+		do: [ :anError | aRequest sendResponseCode: 400 content: (anError messageText) type: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].  ]! !
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 12/8/2021 18:27:19' prior: 51197881!
+listCartAction: aRequest	
+	[ | cartId result cartContent resultDict |
+		cartId := (aRequest fields at: 'cartId') asNumber.
+		
+		cartContent := tusLibros listCartIdentifiedAs: cartId.
+
+		"resultDict := Dictionary new.
+		cartContent contents keysAndValuesDo: [ :anItem :aQuantity | resultDict add: anItem->aQuantity ].
+		result := WebUtils jsonEncode: resultDict."
+		
+		result := WebUtils jsonEncode: cartContent asArray.
+		
+		aRequest send200Response: result
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].
+	 ] 
+		on: Error 
+		do: [ :anError | aRequest sendResponseCode: 400 content: (anError messageText) type: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].  ]! !
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+----SNAPSHOT----(8 December 2021 18:28:42) CuisUniversity-4972.image priorSource: 27719140!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'GRC 12/8/2021 18:29:10'!
+ERROR!
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'GRC 12/8/2021 18:29:10'!
+ERROR!
+!Cart methodsFor: 'assertions' stamp: 'GRC 12/8/2021 18:30:15' prior: 51194422!
+assertIsValidItem: anItem
+	catalog do: [:aBook | 
+		(aBook = anItem) ifTrue: [^true].	
+	].
+	^self signalInvalidItem.! !
+
+!testRun: #TusLibrosSystemFacadeTest #test04CanAddItemsToACreatedCart stamp: 'GRC 12/8/2021 18:30:16'!
+FAILURE!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!StoreTestObjectsFactory methodsFor: 'catalogue' stamp: 'GRC 12/8/2021 18:40:03' prior: 51190414!
+defaultCatalogReact
+
+	| rayuela elAleph elSur elTunel antesDelFin elReinoDelReves tutuMaramba bestiario |
+	
+	rayuela _ self libro: 'Rayuela' con: 1 autor: 'Julio Cortazar' precio: 600 cantidad: 0.
+	bestiario _ self libro: 'Bestiario' con: 8 autor: 'Julio Cortazar' precio: 350 cantidad: 0.
+	elAleph _ self libro: 'El Aleph' con: 2 autor: 'Jorge L. Borges' precio: 450 cantidad: 0.
+	elSur _ self libro: 'El Sur' con: 3 autor: 'Jorge L. Borges' precio: 250 cantidad: 0.
+	antesDelFin _ self libro: 'Antes Del Fin' con: 4 autor: 'Ernesto Sábato' precio: 350 cantidad: 0.
+	elTunel _ self libro: 'El Túnel' con: 5 autor: 'Ernesto Sábato' precio: 400 cantidad: 0.
+	elReinoDelReves _ self libro: 'El Reino Del Revés' con: 6 autor: 'Maria E. Walsh' precio: 300 cantidad: 0.
+	tutuMaramba _ self libro: 'Tutú Marambá' con: 7 autor: 'Maria E. Walsh' precio: 200 cantidad: 0.
+	
+
+	^ {rayuela. bestiario. elAleph. elSur. antesDelFin. elTunel. elReinoDelReves. tutuMaramba.}! !
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+----QUIT----(8 December 2021 18:46:09) CuisUniversity-4972.image priorSource: 27721408!

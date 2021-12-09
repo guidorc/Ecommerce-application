@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Producto from "./ProductoEnCatálogo";
-import CarritoDeCompras from "./Carrito";
-import { handleIncrement } from "./Carrito";
+import cartId from "./cartId";
 
 class Catalogo extends Component {
   constructor(props) {
@@ -40,7 +39,7 @@ class Catalogo extends Component {
   componentDidMount = async () => {
     /* Obtener el Catálogo de Libros */
     var response = await fetch("http://localhost:8080/catalog", {
-      methog: "GET",
+      method: "GET",
     });
 
     /* Actualizar la lista de productos */
@@ -64,8 +63,13 @@ class Catalogo extends Component {
     this.setState({ productos: nuevosProductos });
   };
 
-  onAddClick = (producto) => {
-    CarritoDeCompras.addProduct(producto);
+  onAddClick = async (producto) => {
+    console.log(cartId.id);
+    console.log(producto);
+    var response = await fetch(
+      `http://localhost:8080/addToCart?cartId=${cartId.id}&bookIsbn=${producto.titulo}&bookQuantity=${producto.cantidad}`,
+      { method: "GET" }
+    );
   };
 }
 

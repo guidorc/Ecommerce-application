@@ -31,27 +31,6 @@ class Producto extends Component {
           </div>
 
           <div className="card-footer">
-            <div className="float-left">
-              <span className="badge">{this.state.producto.cantidad}</span>
-              <div className="btn-group">
-                <button
-                  className="btn btn-outline-success"
-                  onClick={() => {
-                    this.props.onIncrement(this.state.producto);
-                  }}
-                >
-                  +
-                </button>
-                <button
-                  className="btn btn-outline-success"
-                  onClick={() => {
-                    this.props.onDecrement(this.state.producto);
-                  }}
-                >
-                  -
-                </button>
-              </div>
-            </div>
             <div className="float-right">{this.props.children}</div>
           </div>
         </div>

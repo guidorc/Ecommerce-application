@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import cartId from "./cartId";
 
 class Login extends Component {
   constructor(props) {
@@ -56,11 +57,13 @@ class Login extends Component {
     /* Envio pedido de login con datos ingresados */
     var response = await fetch(
       `http://localhost:8080/createCart?clientId=${this.state.usuario}&password=${this.state.contraseña}`,
-      { method: "POST" }
+      { method: "GET" }
     );
 
     if (response.status == 200) {
       /* Login Valido */
+      var id_del_carrito = await response.json();
+      cartId.id = id_del_carrito;
       this.setState({
         mensaje: <span className="text-success">Login válido!</span>,
       });

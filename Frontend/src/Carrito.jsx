@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Producto from "./ProductoEnCarrito";
+import cartId from "./cartId";
 
 class CarritoDeCompras extends Component {
   constructor(props) {
@@ -8,7 +9,6 @@ class CarritoDeCompras extends Component {
     // Inicializar el estado
     this.state = {
       productos: [],
-      cartId: null,
     };
   }
 
@@ -35,6 +35,27 @@ class CarritoDeCompras extends Component {
       </div>
     );
   }
+
+  componentDidMount = async () => {
+    /* Obtener el Carrito */
+    console.log(cartId.id);
+    var response = await fetch(
+      `http://localhost:8080/listCart?cartId=${cartId.id}`,
+      {
+        method: "GET",
+      }
+    );
+
+    if (response.status == 200) {
+      /* Actualizar el estado */
+      var carrito = await response.json();
+      console.log(carrito);
+      this.setState({ productos: carrito });
+    } else {
+      /* Pedido Invalido */
+      console.log(response);
+    }
+  };
 
   handleIncrement = (producto) => {
     let nuevosProductos = [...this.state.productos];
