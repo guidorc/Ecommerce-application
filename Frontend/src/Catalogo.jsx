@@ -48,34 +48,41 @@ class Catalogo extends Component {
 
     /* Actualizar la lista de productos */
     var catalogo = await response.json();
+    catalogo.forEach((producto) => {
+      producto["cantidadEnCatalogo"] = 0;
+    });
     this.setState({ productos: catalogo });
   };
 
   handleIncrement = (producto) => {
     let nuevosProductos = [...this.state.productos];
     let indice = nuevosProductos.indexOf(producto);
-    nuevosProductos[indice].cantidad++;
+    nuevosProductos[indice].cantidadEnCatalogo += 1;
     this.setState({ productos: nuevosProductos });
   };
 
   handleDecrement = (producto) => {
     let nuevosProductos = [...this.state.productos];
     let indice = nuevosProductos.indexOf(producto);
-    let cantidadActual = nuevosProductos[indice].cantidad;
+    let cantidadActual = nuevosProductos[indice].cantidadEnCatalogo;
     cantidadActual--;
-    nuevosProductos[indice].cantidad = Math.max(0, cantidadActual);
+    nuevosProductos[indice].cantidadEnCatalogo = Math.max(0, cantidadActual);
     this.setState({ productos: nuevosProductos });
   };
 
   onAddClick = async (producto) => {
     /* Agregar el producto al carrito del usuario */
     var response = await fetch(
-      `http://localhost:8080/addToCart?cartId=${cartId.id}&bookIsbn=${producto.titulo}&bookQuantity=${producto.cantidad}`,
+      `http://localhost:8080/addToCart?cartId=${cartId.id}&bookIsbn=${producto.titulo}&bookQuantity=${producto.cantidadEnCatalogo}`,
       { method: "GET" }
     );
 
     if (response.ok) {
       window.alert("El elemento fué agregado con éxito!");
+      let nuevosProductos = [...this.state.productos];
+      let indice = nuevosProductos.indexOf(producto);
+      nuevosProductos[indice].cantidadEnCatalogo = 0;
+      this.setState({ productos: nuevosProductos });
     } else {
       window.alert("El elemento no pudo agregarse al carrito.");
     }

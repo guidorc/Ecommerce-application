@@ -36,7 +36,28 @@ class CarritoDeCompras extends Component {
 
   componentDidMount = async () => {
     /* Obtener el Carrito */
-    console.log(cartId.id);
+    this.getCart();
+  };
+
+  handleDelete = async (producto) => {
+    if (
+      window.confirm("Está seguro que desea quitar el elemento del carrito?")
+    ) {
+      /* request al servidor para quitar el producto del carrito */
+      var response = await fetch(
+        `http://localhost:8080/removeFromCart?cartId=${cartId.id}&bookIsbn=${producto.titulo}&bookQuantity=${producto.cantidad}`,
+        { method: "GET" }
+      );
+      if (!response.ok) {
+        console.log(response);
+      }
+    }
+
+    /* obtener el carrito actualizado */
+    this.getCart();
+  };
+
+  getCart = async () => {
     var response = await fetch(
       `http://localhost:8080/listCart?cartId=${cartId.id}`,
       {
@@ -47,28 +68,10 @@ class CarritoDeCompras extends Component {
     if (response.status == 200) {
       /* Actualizar el estado */
       var carrito = await response.json();
-      console.log(carrito);
       this.setState({ productos: carrito });
     } else {
       /* Pedido Invalido */
       console.log(response);
-    }
-  };
-
-  handleDelete = async (producto) => {
-    let nuevosProductos = [...this.state.productos];
-    let indice = nuevosProductos.indexOf(producto);
-
-    if (
-      window.confirm("Está seguro que desea quitar el elemento del carrito?")
-    ) {
-      /* request al servidor para quitar el producto del carrito */
-      var response = await fetch(
-        `http://localhost:8080/removeFromCart?cartId=${cartId.id}&bookIsbn=${producto.titulo}&bookQuantity=${producto.cantidad}`,
-        { method: "GET" }
-      );
-      nuevosProductos.splice(indice, 1);
-      this.setState({ productos: nuevosProductos });
     }
   };
 

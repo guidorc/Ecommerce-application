@@ -22,7 +22,9 @@ class Producto extends Component {
 
           <div className="card-footer">
             <div className="float-left">
-              <span className="badge">{this.state.producto.cantidad}</span>
+              <span className="badge">
+                {this.state.producto.cantidadEnCatalogo}
+              </span>
               <div className="btn-group">
                 <button
                   className="btn btn-outline-success"
