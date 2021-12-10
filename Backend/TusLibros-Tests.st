@@ -259,18 +259,24 @@ TestCase subclass: #TusLibrosSystemFacadeTest
 	poolDictionaries: ''
 	category: 'TusLibros-Tests'!
 
-!TusLibrosSystemFacadeTest methodsFor: 'tests - remove from cart' stamp: 'GRC 11/29/2021 13:29:35'!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - remove from cart' stamp: 'GRC 12/10/2021 17:07:53'!
 test22CanRemoveItemsFromACreatedCart
 
-	| cartId |
+	| cartId cartContent |
 
 	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
 
 	systemFacade add: 1 of: self validBook toCartIdentifiedAs: cartId.
-	self assert: ((systemFacade listCartIdentifiedAs: cartId) occurrencesOf: self validBook) equals: 1.
+	
+	cartContent _ systemFacade listCartIdentifiedAs: cartId.
+	
+	self assert: ((cartContent at: 1) at: 'cantidad') equals: 1.
 	
 	systemFacade remove: 1 of: self validBook fromCartIdentifiedAs: cartId.
-	self assert: ((systemFacade listCartIdentifiedAs: cartId) occurrencesOf: self validBook) equals: 0.! !
+	
+	cartContent _ systemFacade listCartIdentifiedAs: cartId.
+	
+	self deny: (cartContent includes: self validBook).! !
 
 !TusLibrosSystemFacadeTest methodsFor: 'tests - remove from cart' stamp: 'GRC 11/29/2021 13:29:50'!
 test23CanNotRemoveItemFromNotCreatedCart
@@ -312,53 +318,65 @@ test24CanNotRemoveItemNotSellByTheStore
 			self assert: (systemFacade listCartIdentifiedAs: cartId) isEmpty ]
 		! !
 
-!TusLibrosSystemFacadeTest methodsFor: 'tests - remove from cart' stamp: 'GRC 11/29/2021 13:30:24'!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - remove from cart' stamp: 'GRC 12/10/2021 17:26:45'!
 test25CanRemoveItemMultipleTimes
 
-	| cartId |
+	| cartId cartContent |
 
 	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
 
 	systemFacade add: 3 of: self validBook toCartIdentifiedAs: cartId.
-	self assert: ((systemFacade listCartIdentifiedAs: cartId) occurrencesOf: self validBook) equals: 3.
+	cartContent _ systemFacade listCartIdentifiedAs: cartId.
+	
+	self assert: ((cartContent at: 1) at: 'cantidad') equals: 3.
+	
+	"systemFacade remove: 1 of: self validBook fromCartIdentifiedAs: cartId.
+	cartContent _ systemFacade listCartIdentifiedAs: cartId.
+	
+	self assert: ((cartContent at: 1) at: 'cantidad') equals: 2.
 	
 	systemFacade remove: 1 of: self validBook fromCartIdentifiedAs: cartId.
-	self assert: ((systemFacade listCartIdentifiedAs: cartId) occurrencesOf: self validBook) equals: 2.
+	cartContent _ systemFacade listCartIdentifiedAs: cartId.
+	
+	self assert: ((cartContent at: 1) at: 'cantidad') equals: 1.
 	
 	systemFacade remove: 1 of: self validBook fromCartIdentifiedAs: cartId.
-	self assert: ((systemFacade listCartIdentifiedAs: cartId) occurrencesOf: self validBook) equals: 1.
+	cartContent _ systemFacade listCartIdentifiedAs: cartId.
 	
-	systemFacade remove: 1 of: self validBook fromCartIdentifiedAs: cartId.
-	self assert: ((systemFacade listCartIdentifiedAs: cartId) occurrencesOf: self validBook) equals: 0.
-	
-	systemFacade remove: 1 of: self validBook fromCartIdentifiedAs: cartId.
-	self assert: ((systemFacade listCartIdentifiedAs: cartId) occurrencesOf: self validBook) equals: 0.
+	self deny: (cartContent includes: self validBook)."
 		! !
 
-!TusLibrosSystemFacadeTest methodsFor: 'tests - remove from cart' stamp: 'GRC 11/29/2021 13:30:31'!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - remove from cart' stamp: 'GRC 12/10/2021 17:26:24'!
 test26CanNotRemoveItemsMoreTimesThanItAppears
 
-	| cartId |
+	| cartId cartContent |
 
 	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
 
 	systemFacade add: 3 of: self validBook toCartIdentifiedAs: cartId.
-	self assert: ((systemFacade listCartIdentifiedAs: cartId) occurrencesOf: self validBook) equals: 3.
+	cartContent _ systemFacade listCartIdentifiedAs: cartId.
+	
+	self assert: ((cartContent at: 1) at: 'cantidad') equals: 3.
 	
 	systemFacade remove: 4 of: self validBook fromCartIdentifiedAs: cartId.
-	self assert: ((systemFacade listCartIdentifiedAs: cartId) occurrencesOf: self validBook) equals: 0.
+	cartContent _ systemFacade listCartIdentifiedAs: cartId.
+	
+	self deny: (cartContent includes: self validBook).
 		! !
 
 
-!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart' stamp: 'GRC 11/29/2021 13:06:12'!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart' stamp: 'GRC 12/10/2021 17:05:47'!
 test04CanAddItemsToACreatedCart
 
-	| cartId |
+	| cartId cartContent |
 
 	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
 
 	systemFacade add: 1 of: self validBook toCartIdentifiedAs: cartId.
-	self assert: ((systemFacade listCartIdentifiedAs: cartId) occurrencesOf: self validBook) equals: 1
+	
+	cartContent _ systemFacade listCartIdentifiedAs: cartId.
+	
+	self assert: ((cartContent at: 1) at: 'cantidad') equals: 1
 		! !
 
 !TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart' stamp: 'GRC 11/29/2021 13:07:48'!
@@ -720,7 +738,7 @@ test21CanNotCheckOutCartWhenSessionIsExpired
 
 	! !
 
-!TusLibrosSystemFacadeTest methodsFor: 'tests - checkout' stamp: 'GRC 11/29/2021 13:51:26'!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - checkout' stamp: 'GRC 12/10/2021 17:23:39'!
 test27CheckedOutCartIsEmpty
 
 	| cartId |
@@ -733,7 +751,7 @@ test27CheckedOutCartIsEmpty
 		ownedBy: testObjectsFactory notExpiredCreditCardOwner
 		expiringOn: testObjectsFactory notExpiredMonthOfYear.
 		
-	self assert: Bag new equals: (systemFacade listCartIdentifiedAs: cartId).
+	self assert: OrderedCollection new equals: (systemFacade listCartIdentifiedAs: cartId).
 ! !
 
 
@@ -756,7 +774,7 @@ test08CanNotListCartOfInvalidCartId
 			self assert: anError messageText equals: systemFacade invalidCartIdErrorDescription ]
 	! !
 
-!TusLibrosSystemFacadeTest methodsFor: 'tests - list cart' stamp: 'GRC 12/8/2021 18:06:36'!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - list cart' stamp: 'GRC 12/10/2021 17:04:52'!
 test09ListCartReturnsTheRightNumberOfItems
 
 	| cartId cartContent |
@@ -766,8 +784,8 @@ test09ListCartReturnsTheRightNumberOfItems
 	systemFacade add: 2 of: self anotherValidBook toCartIdentifiedAs: cartId.
 	cartContent := systemFacade listCartIdentifiedAs: cartId.
 
-	self assert: (cartContent occurrencesOf: self validBook) equals: 1.
-	self assert: (cartContent occurrencesOf: self anotherValidBook) equals: 2
+	self assert: ((cartContent at: 1) at: 'cantidad') equals: 1.
+	self assert: ((cartContent at: 2) at: 'cantidad') equals: 2
 ! !
 
 !TusLibrosSystemFacadeTest methodsFor: 'tests - list cart' stamp: 'HAW 11/26/2018 18:04:42'!

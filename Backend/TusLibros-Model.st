@@ -39,10 +39,14 @@ content
 
 	^items copy! !
 
-!Cart methodsFor: 'content' stamp: 'GRC 11/29/2021 09:44:13'!
+!Cart methodsFor: 'content' stamp: 'GRC 12/10/2021 17:17:09'!
 itemsAndQuantitiesDo: aBlock
 
-	^ items contents keysAndValuesDo: [ :anItem :aQuantity | aBlock value: anItem value: aQuantity ]! !
+	^ items do: [ :anItem | | price quantity |
+		price _ anItem at: 'titulo'.
+		quantity _ anItem at: 'cantidad'.
+		aBlock value: price value: quantity.
+	]! !
 
 !Cart methodsFor: 'content' stamp: 'HernanWilkinson 6/17/2013 17:45'!
 occurrencesOf: anItem
@@ -84,7 +88,7 @@ add: anItem
 
 	^ self add: 1 of: anItem ! !
 
-!Cart methodsFor: 'adding' stamp: 'GRC 12/8/2021 22:49:02'!
+!Cart methodsFor: 'adding' stamp: 'GRC 12/8/2021 22:55:01'!
 add: aQuantity of: anItem
 
 	self assertIsValidQuantity: aQuantity.
@@ -93,8 +97,8 @@ add: aQuantity of: anItem
 	anItem at: 'cantidad' put: aQuantity.
 	
 	items do: [:aBook |
-		((aBook at: 'titulo') = anItem at: 'titulo') ifTrue: [ |cantidad|
-			cantidad _ aBook at: 'cantidad' + aQuantity.
+		((aBook at: 'titulo') = (anItem at: 'titulo')) ifTrue: [ |cantidad|
+			cantidad _ (aBook at: 'cantidad') + aQuantity.
 			aBook at: 'cantidad' put: cantidad.
 			^'actualizado'
 		].	
@@ -259,12 +263,12 @@ Object subclass: #Cashier
 	poolDictionaries: ''
 	category: 'TusLibros-Model'!
 
-!Cashier methodsFor: 'checkout - private' stamp: 'HernanWilkinson 6/22/2013 12:17'!
+!Cashier methodsFor: 'checkout - private' stamp: 'GRC 12/10/2021 17:09:08'!
 createLineItemOf: anItem quantity: aQuantity
 
 	^LineItem of: anItem quantity: aQuantity total: (self totalOf: anItem quantity: aQuantity) ! !
 
-!Cashier methodsFor: 'checkout - private' stamp: 'HernanWilkinson 6/22/2013 12:25'!
+!Cashier methodsFor: 'checkout - private' stamp: 'GRC 12/10/2021 17:17:57'!
 createSale
 
 	^ Sale doneBy: owner certifiedWith: ticket
@@ -282,19 +286,20 @@ createTicket
 	ticket := Ticket of: lineItems
 	! !
 
-!Cashier methodsFor: 'checkout - private' stamp: 'HernanWilkinson 6/22/2013 12:20'!
+!Cashier methodsFor: 'checkout - private' stamp: 'GRC 12/10/2021 17:17:47'!
 debitTotal
 
 	merchantProcessor debit: ticket total from: creditCard.
 	! !
 
-!Cashier methodsFor: 'checkout - private' stamp: 'HernanWilkinson 6/17/2013 19:06'!
+!Cashier methodsFor: 'checkout - private' stamp: 'GRC 12/10/2021 17:17:53'!
 registerSale
 
 	salesBook add: self createSale! !
 
-!Cashier methodsFor: 'checkout - private' stamp: 'GRC 12/8/2021 18:08:34'!
+!Cashier methodsFor: 'checkout - private' stamp: 'GRC 12/10/2021 17:09:23'!
 totalOf: anItem quantity: aQuantity
+
 	cart catalog do: [:aBook |
 		((aBook at: 'titulo') = anItem) ifTrue: [
 			^(aBook at: 'precio') * aQuantity.	
@@ -312,7 +317,7 @@ checkOut
 	^ ticket ! !
 
 
-!Cashier methodsFor: 'initialization' stamp: 'HernanWilkinson 6/22/2013 12:02'!
+!Cashier methodsFor: 'initialization' stamp: 'GRC 12/10/2021 17:08:57'!
 initializeToCheckout: aCart ownedBy: anOwner charging: aCreditCard throught: aMerchantProcessor registeringOn: aSalesBook
 
 	cart := aCart.
@@ -439,7 +444,7 @@ quantity
 
 	^quantity.! !
 
-!LineItem methodsFor: 'accessing' stamp: 'HernanWilkinson 6/22/2013 12:21'!
+!LineItem methodsFor: 'accessing' stamp: 'GRC 12/10/2021 17:08:43'!
 total
 
 	^ total! !
@@ -460,7 +465,7 @@ initializeOf: anItem quantity: aQuantity total: aTotal
 LineItem class
 	instanceVariableNames: ''!
 
-!LineItem class methodsFor: 'instance creation' stamp: 'HernanWilkinson 6/22/2013 12:18'!
+!LineItem class methodsFor: 'instance creation' stamp: 'GRC 12/10/2021 17:17:31'!
 of: anItem quantity: aQuantity total: aTotal
 
 	^self new initializeOf: anItem quantity: aQuantity total: aTotal
@@ -612,25 +617,19 @@ Object subclass: #Ticket
 	poolDictionaries: ''
 	category: 'TusLibros-Model'!
 
-!Ticket methodsFor: 'total' stamp: 'HernanWilkinson 6/17/2015 20:39'!
+!Ticket methodsFor: 'total' stamp: 'GRC 12/10/2021 17:15:41'!
 total
 
 	^lineItems sum: [ :aLineItem | aLineItem total]! !
 
 
-!Ticket methodsFor: 'initialization' stamp: 'HernanWilkinson 6/22/2013 12:20'!
+!Ticket methodsFor: 'initialization' stamp: 'GRC 12/10/2021 17:15:32'!
 initializeOf: aCollectionOfLineItems
 
 	lineItems := aCollectionOfLineItems ! !
 
 
-!Ticket methodsFor: 'line items' stamp: 'HernanWilkinson 6/22/2013 12:33'!
-lineItemsDo: aBlock
-
-	^lineItems do: aBlock ! !
-
-
-!Ticket methodsFor: 'as yet unclassified' stamp: 'GRC 11/28/2021 15:57:04'!
+!Ticket methodsFor: 'line items' stamp: 'GRC 11/28/2021 15:57:04'!
 items
 
 	| result |
@@ -642,6 +641,11 @@ items
 	].
 
 	^result.! !
+
+!Ticket methodsFor: 'line items' stamp: 'GRC 12/10/2021 17:15:51'!
+lineItemsDo: aBlock
+
+	^lineItems do: aBlock ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
