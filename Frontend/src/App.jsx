@@ -16,7 +16,7 @@ class App extends Component {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/catalogo" element={<Catalogo />} />
-            <Route path="/clientes" element={<ListaDeClientes />} />
+            {/*<Route path="/clientes" element={<ListaDeClientes />} />*/}
             <Route path="/carrito" element={<CarritoDeCompras />} />
             <Route path="*" element={<NotMappedPage />} />
           </Routes>

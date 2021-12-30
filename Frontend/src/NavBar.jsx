@@ -41,11 +41,11 @@ class NavBar extends Component {
                     Catalogo
                   </Link>
                 </li>
-                <li className="nav-item">
+                {/*<li className="nav-item">
                   <Link to="/clientes" className="nav-link">
                     Clientes
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

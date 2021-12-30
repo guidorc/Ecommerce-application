@@ -30,6 +30,9 @@ class CarritoDeCompras extends Component {
         <button className="btn btn-primary" onClick={this.onBuyClick}>
           Comprar
         </button>
+        <button className="btn btn-primary" onClick={this.showPurchaseHistory}>
+          Historial
+        </button>
       </div>
     );
   }
@@ -58,6 +61,7 @@ class CarritoDeCompras extends Component {
   };
 
   getCart = async () => {
+    /* Request al servidor por el listado del carrito */
     var response = await fetch(
       `http://localhost:8080/listCart?cartId=${cartId.id}`,
       {
@@ -65,7 +69,7 @@ class CarritoDeCompras extends Component {
       }
     );
 
-    if (response.status == 200) {
+    if (response.ok) {
       /* Actualizar el estado */
       var carrito = await response.json();
       this.setState({ productos: carrito });
@@ -75,7 +79,43 @@ class CarritoDeCompras extends Component {
     }
   };
 
-  onBuyClick = (producto) => {};
+  onBuyClick = async (producto) => {
+    /* Request al servidor para comprar el carrito */
+    var response = await fetch(
+      `http://localhost:8080/checkoutCart?cartId=${cartId.id}&ccn=1111222233334444&cced=11/2022&cco=Juan Perez`,
+      {
+        method: "GET",
+      }
+    );
+
+    if (response.ok) {
+      /* Actualizar el estado */
+      window.alert("La compra fué realizada con éxito!");
+      this.getCart();
+    } else {
+      /* Pedido Invalido */
+      window.alert("No se pudo realizar la compra.");
+      console.log(response);
+    }
+  };
+
+  showPurchaseHistory = async (producto) => {
+    /* Request al servidor para comprar el carrito */
+    var response = await fetch(
+      `http://localhost:8080/listPurchases?clientId=&password=`,
+      {
+        method: "GET",
+      }
+    );
+    if (response.ok) {
+      /* Actualizar el estado */
+      var historial = await response.json();
+      console.log(historial);
+    } else {
+      /* Pedido Invalido */
+      console.log(response);
+    }
+  };
 }
 
 export default CarritoDeCompras;

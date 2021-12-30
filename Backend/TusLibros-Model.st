@@ -404,13 +404,13 @@ Object subclass: #CreditCard
 	poolDictionaries: ''
 	category: 'TusLibros-Model'!
 
-!CreditCard methodsFor: 'testing' stamp: 'HernanWilkinson 6/17/2013 18:39'!
+!CreditCard methodsFor: 'testing' stamp: 'GRC 12/11/2021 11:22:26'!
 isExpiredOn: aDate
 
 	^expiration start < (Month month: aDate monthIndex year: aDate yearNumber) start ! !
 
 
-!CreditCard methodsFor: 'initialization' stamp: 'HernanWilkinson 6/17/2013 18:38'!
+!CreditCard methodsFor: 'initialization' stamp: 'GRC 12/11/2021 11:22:24'!
 initializeExpiringOn: aMonth
 
 	expiration := aMonth ! !
@@ -503,11 +503,6 @@ Object subclass: #MerchantProcessor
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros-Model'!
-
-!MerchantProcessor methodsFor: 'debit' stamp: 'HernanWilkinson 6/22/2013 14:31'!
-README
-
-	"Aunque nadie subclasifica esta clase, esta para definir el protocolo que se espera que todo MerchantProcessor sepa responder - Hernan"! !
 
 !MerchantProcessor methodsFor: 'debit' stamp: 'GRC 11/28/2021 15:27:00'!
 debit: anAmount from: aCreditCard! !
@@ -629,15 +624,19 @@ initializeOf: aCollectionOfLineItems
 	lineItems := aCollectionOfLineItems ! !
 
 
-!Ticket methodsFor: 'line items' stamp: 'GRC 11/28/2021 15:57:04'!
+!Ticket methodsFor: 'line items' stamp: 'GRC 12/11/2021 11:16:20'!
 items
 
 	| result |
 	
-	result _ Dictionary new.
+	result _ OrderedCollection new.
 	
-	lineItems do: [:anItem |
-		result at: anItem 	item put: anItem quantity.
+	lineItems do: [:anItem | | item |
+		item _ Dictionary new.
+		item at: 'item' put: anItem 	item.
+		item at: 'quantity' put: anItem quantity.
+		item at: 'total' put: anItem total.
+		result add: item.
 	].
 
 	^result.! !
@@ -743,7 +742,7 @@ catalogAction: aRequest
 		do: [ :anError | aRequest sendResponseCode: 400 content: (anError messageText) type: 'application/json; charset=utf-8' do: [:resp | 
 					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].  ]! !
 
-!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 12/3/2021 23:09:42'!
+!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 12/30/2021 10:25:47'!
 checkOutCartAction: aRequest	
 
 	[ | cartId cced ccn cco expMonth expYear expirationDate result ticket ticketItems |
@@ -752,7 +751,7 @@ checkOutCartAction: aRequest
 		cced := aRequest fields at: 'cced'.
 		cco := aRequest fields at: 'cco'."
 		
-		cartId _ 1.
+		cartId _ (aRequest fields at: 'cartId') asNumber.
 		ccn _ '1111222233334444'.
 		cced _ '11/2022'.
 		cco _ 'Juan Perez'.
@@ -766,7 +765,7 @@ checkOutCartAction: aRequest
 		
 		ticketItems _ ticket items.
 		
-		result := WebUtils jsonEncode: ticketItems.
+		result := WebUtils jsonEncode: ticketItems asArray.
 		
 		aRequest send200Response: result
 			contentType: 'application/json; charset=utf-8' do: [:resp | 
