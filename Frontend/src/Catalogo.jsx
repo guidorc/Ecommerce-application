@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Producto from "./ProductoEnCatálogo";
-import cartId from "./cartId";
+import user_info from "./user_info";
 
 class Catalogo extends Component {
   constructor(props) {
@@ -73,7 +73,7 @@ class Catalogo extends Component {
   onAddClick = async (producto) => {
     /* Agregar el producto al carrito del usuario */
     var response = await fetch(
-      `http://localhost:8080/addToCart?cartId=${cartId.id}&bookIsbn=${producto.titulo}&bookQuantity=${producto.cantidadEnCatalogo}`,
+      `http://localhost:8080/addToCart?cartId=${user_info.cartId}&bookIsbn=${producto.titulo}&bookQuantity=${producto.cantidadEnCatalogo}`,
       { method: "GET" }
     );
 

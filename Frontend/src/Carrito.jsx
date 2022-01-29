@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Producto from "./ProductoEnCarrito";
-import cartId from "./cartId";
+import user_info from "./user_info";
 
 class CarritoDeCompras extends Component {
   constructor(props) {
@@ -30,9 +30,6 @@ class CarritoDeCompras extends Component {
         <button className="btn btn-primary" onClick={this.onBuyClick}>
           Comprar
         </button>
-        <button className="btn btn-primary" onClick={this.showPurchaseHistory}>
-          Historial
-        </button>
       </div>
     );
   }
@@ -48,7 +45,7 @@ class CarritoDeCompras extends Component {
     ) {
       /* request al servidor para quitar el producto del carrito */
       var response = await fetch(
-        `http://localhost:8080/removeFromCart?cartId=${cartId.id}&bookIsbn=${producto.titulo}&bookQuantity=${producto.cantidad}`,
+        `http://localhost:8080/removeFromCart?cartId=${user_info.cartId}&bookIsbn=${producto.titulo}&bookQuantity=${producto.cantidad}`,
         { method: "GET" }
       );
       if (!response.ok) {
@@ -63,7 +60,7 @@ class CarritoDeCompras extends Component {
   getCart = async () => {
     /* Request al servidor por el listado del carrito */
     var response = await fetch(
-      `http://localhost:8080/listCart?cartId=${cartId.id}`,
+      `http://localhost:8080/listCart?cartId=${user_info.cartId}`,
       {
         method: "GET",
       }
@@ -82,7 +79,7 @@ class CarritoDeCompras extends Component {
   onBuyClick = async (producto) => {
     /* Request al servidor para comprar el carrito */
     var response = await fetch(
-      `http://localhost:8080/checkoutCart?cartId=${cartId.id}&ccn=1111222233334444&cced=11/2022&cco=Juan Perez`,
+      `http://localhost:8080/checkoutCart?cartId=${user_info.cartId}&ccn=1111222233334444&cced=11/2022&cco=Juan Perez`,
       {
         method: "GET",
       }
@@ -95,24 +92,6 @@ class CarritoDeCompras extends Component {
     } else {
       /* Pedido Invalido */
       window.alert("No se pudo realizar la compra.");
-      console.log(response);
-    }
-  };
-
-  showPurchaseHistory = async (producto) => {
-    /* Request al servidor para comprar el carrito */
-    var response = await fetch(
-      `http://localhost:8080/listPurchases?clientId=&password=`,
-      {
-        method: "GET",
-      }
-    );
-    if (response.ok) {
-      /* Actualizar el estado */
-      var historial = await response.json();
-      console.log(historial);
-    } else {
-      /* Pedido Invalido */
       console.log(response);
     }
   };

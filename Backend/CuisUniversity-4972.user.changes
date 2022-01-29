@@ -18550,3 +18550,119 @@ server _ TusLibrosRestInterface listeningOn: 8080.!
 TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
 
 ----QUIT----(30 December 2021 10:37:05) CuisUniversity-4972.image priorSource: 27801100!
+
+----STARTUP---- (30 December 2021 14:00:30) as C:\Users\Guido\Desktop\Git\e-commerce-site\Backend\CuisUniversity-4972.image!
+
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 12/30/2021 14:32:05' prior: 51190799!
+listPurchasesAction: aRequest
+	[ | clientId password purchases result |
+		clientId := aRequest fields at: 'clientId'.
+		password := aRequest fields at: 'password'.
+		
+		purchases := tusLibros listPurchasesOf: clientId authenticatingWith: password.
+		
+		result := WebUtils jsonEncode: purchases asArray.
+		
+		aRequest send200Response: result
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+	 ] 
+		on: Error 
+		do: [ :anError | aRequest sendResponseCode: 400 content: (anError messageText) type: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].  ]! !
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 12/30/2021 14:33:06' prior: 51200487!
+listPurchasesAction: aRequest
+	[ | clientId password purchases result |
+		clientId := aRequest fields at: 'clientId'.
+		password := aRequest fields at: 'password'.
+		
+		purchases := tusLibros listPurchasesOf: clientId authenticatingWith: password.
+		
+		result := WebUtils jsonEncode: purchases.
+		
+		aRequest send200Response: result
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+	 ] 
+		on: Error 
+		do: [ :anError | aRequest sendResponseCode: 400 content: (anError messageText) type: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].  ]! !
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 12/30/2021 14:35:19' prior: 51200516!
+listPurchasesAction: aRequest
+	[ | clientId password purchases result |
+		clientId := aRequest fields at: 'clientId'.
+		password := aRequest fields at: 'password'.
+		
+		purchases := tusLibros listPurchasesOf: clientId authenticatingWith: password.
+		
+		result := WebUtils jsonEncode: purchases asArray.
+		
+		aRequest send200Response: result
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+	 ] 
+		on: Error 
+		do: [ :anError | aRequest sendResponseCode: 400 content: (anError messageText) type: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].  ]! !
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+----QUIT----(30 December 2021 14:38:22) CuisUniversity-4972.image priorSource: 27801637!
+
+----STARTUP---- (3 January 2022 14:20:39) as C:\Users\Guido\Desktop\Git\e-commerce-site\Backend\CuisUniversity-4972.image!
+
+
+----QUIT----(3 January 2022 14:25:21) CuisUniversity-4972.image priorSource: 27805585!
+
+----STARTUP---- (29 January 2022 11:27:49) as C:\Users\Guido\Desktop\Git\e-commerce-site\Backend\CuisUniversity-4972.image!
+
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+LoginWindow open.!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+----QUIT----(29 January 2022 11:29:24) CuisUniversity-4972.image priorSource: 27805800!

@@ -813,7 +813,7 @@ listCartAction: aRequest
 		do: [ :anError | aRequest sendResponseCode: 400 content: (anError messageText) type: 'application/json; charset=utf-8' do: [:resp | 
 					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].  ]! !
 
-!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 12/3/2021 23:09:52'!
+!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 12/30/2021 14:35:19'!
 listPurchasesAction: aRequest
 	[ | clientId password purchases result |
 		clientId := aRequest fields at: 'clientId'.
@@ -821,7 +821,7 @@ listPurchasesAction: aRequest
 		
 		purchases := tusLibros listPurchasesOf: clientId authenticatingWith: password.
 		
-		result := WebUtils jsonEncode: purchases.
+		result := WebUtils jsonEncode: purchases asArray.
 		
 		aRequest send200Response: result
 			contentType: 'application/json; charset=utf-8' do: [:resp | 
