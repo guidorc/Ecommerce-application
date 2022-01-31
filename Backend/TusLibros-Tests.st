@@ -618,11 +618,12 @@ validUserPassword
 
 	^'validUserPassword'! !
 
-!TusLibrosSystemFacadeTest methodsFor: 'test objects' stamp: 'GRC 11/29/2021 09:28:59'!
+!TusLibrosSystemFacadeTest methodsFor: 'test objects' stamp: 'GRC 12/20/2021 17:34:38'!
 validUsersAndPasswords
 
 	^Dictionary new
-		at: self validUser put: self validUserPassword;		at: self anotherValidUser put: self validUserPassword;
+		at: self validUser put: self validUserPassword;
+		at: self anotherValidUser put: self validUserPassword;
 		yourself! !
 
 
@@ -644,7 +645,7 @@ test10CanCheckoutACart
 	self assert: (purchases at: 'total amount') equals: testObjectsFactory itemSellByTheStorePrice.
 ! !
 
-!TusLibrosSystemFacadeTest methodsFor: 'tests - checkout' stamp: 'HAW 11/26/2018 18:05:20'!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - checkout' stamp: 'GRC 12/28/2021 15:17:59'!
 test11CanNotCheckoutANotCreatedCart
 
 	self
@@ -659,7 +660,7 @@ test11CanNotCheckoutANotCreatedCart
 
 		! !
 
-!TusLibrosSystemFacadeTest methodsFor: 'tests - checkout' stamp: 'HAW 11/26/2018 18:06:07'!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - checkout' stamp: 'GRC 12/28/2021 15:18:01'!
 test12CanNotCheckoutAnEmptyCart
 
 	| cartId |
@@ -674,26 +675,6 @@ test12CanNotCheckoutAnEmptyCart
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :anError |
 			self assert: anError messageText equals: systemFacade cartCanNotBeEmptyErrorMessage.
-			self assert: (systemFacade listPurchasesOf: self validUser authenticatingWith: self validUserPassword) isEmpty ]
-
-		! !
-
-!TusLibrosSystemFacadeTest methodsFor: 'tests - checkout' stamp: 'HAW 11/26/2018 18:07:02'!
-test13CanNotCheckoutWithAnExpiredCreditCard
-
-	| cartId |
-
-	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
-	systemFacade add: 1 of: self validBook toCartIdentifiedAs: cartId.
-	self
-		should: [systemFacade
-			checkOutCartIdentifiedAs: cartId
-			withCreditCardNumbered: testObjectsFactory notExpiredCreditCardNumber
-			ownedBy: testObjectsFactory notExpiredCreditCardOwner
-			expiringOn: testObjectsFactory expiredMonthOfYear ]
-		raise: Error - MessageNotUnderstood
-		withExceptionDo: [ :anError |
-			self assert: anError messageText equals: systemFacade canNotChargeAnExpiredCreditCardErrorMessage.
 			self assert: (systemFacade listPurchasesOf: self validUser authenticatingWith: self validUserPassword) isEmpty ]
 
 		! !
@@ -927,7 +908,7 @@ defaultCatalog
 		at: 'Silverschats' put: 500;
 		yourself ! !
 
-!StoreTestObjectsFactory methodsFor: 'catalogue' stamp: 'GRC 12/8/2021 18:40:03'!
+!StoreTestObjectsFactory methodsFor: 'catalogue' stamp: 'GRC 12/11/2021 11:09:54'!
 defaultCatalogReact
 
 	| rayuela elAleph elSur elTunel antesDelFin elReinoDelReves tutuMaramba bestiario |
@@ -937,9 +918,9 @@ defaultCatalogReact
 	elAleph _ self libro: 'El Aleph' con: 2 autor: 'Jorge L. Borges' precio: 450 cantidad: 0.
 	elSur _ self libro: 'El Sur' con: 3 autor: 'Jorge L. Borges' precio: 250 cantidad: 0.
 	antesDelFin _ self libro: 'Antes Del Fin' con: 4 autor: 'Ernesto Sábato' precio: 350 cantidad: 0.
-	elTunel _ self libro: 'El Túnel' con: 5 autor: 'Ernesto Sábato' precio: 400 cantidad: 0.
-	elReinoDelReves _ self libro: 'El Reino Del Revés' con: 6 autor: 'Maria E. Walsh' precio: 300 cantidad: 0.
-	tutuMaramba _ self libro: 'Tutú Marambá' con: 7 autor: 'Maria E. Walsh' precio: 200 cantidad: 0.
+	elTunel _ self libro: 'El Tunel' con: 5 autor: 'Ernesto Sábato' precio: 400 cantidad: 0.
+	elReinoDelReves _ self libro: 'El Reino Del Reves' con: 6 autor: 'Maria E. Walsh' precio: 300 cantidad: 0.
+	tutuMaramba _ self libro: 'Tuta Maramba' con: 7 autor: 'Maria E. Walsh' precio: 200 cantidad: 0.
 	
 
 	^ {rayuela. bestiario. elAleph. elSur. antesDelFin. elTunel. elReinoDelReves. tutuMaramba.}! !

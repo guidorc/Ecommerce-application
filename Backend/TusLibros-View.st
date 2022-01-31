@@ -882,17 +882,19 @@ initializeWith: userPurchases
 	purchasesIndex _ 1.
 	restInterface _ TusLibrosInterface new.! !
 
-!PurchasesModel methodsFor: 'as yet unclassified' stamp: 'GRC 11/29/2021 16:45:36'!
+!PurchasesModel methodsFor: 'as yet unclassified' stamp: 'GRC 12/1/2021 11:51:32'!
 purchases
 
-	| purchasesAsOrderedCollection |
+	| purchasesAsOrderedCollection total |
 
     purchasesAsOrderedCollection _ OrderedCollection new.
     purchases keysAndValuesDo: [:aKey :aQuantity | 
-	(aKey = 'total amount') 
-		ifTrue: [purchasesAsOrderedCollection add: (aKey , ': $' , aQuantity asString)]
-		ifFalse: [purchasesAsOrderedCollection add: (aKey , ': #' , aQuantity asString)]
+	(aKey = 'total amount') ifFalse: [purchasesAsOrderedCollection add: (aKey , ': #' , aQuantity asString)]
 	].
+
+	total _ purchases at: 'total amount'.
+
+	purchasesAsOrderedCollection add: ('total amount' , ': $' , total asString).
 
     ^purchasesAsOrderedCollection.! !
 

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import user_info from "./user_info";
+import Producto from "./ProductoEnHistorial";
 
 class Historial extends Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class Historial extends Component {
         <h4>Historial de Compras</h4>
         <div>
           {this.state.items.map((item) => (
-            <div>{item}</div>
+            <Producto key={item.id} item={item} />
           ))}
         </div>
       </div>
@@ -35,6 +36,7 @@ class Historial extends Component {
 
     /* Actualizar la lista de productos */
     var historial = await response.json();
+    console.log(historial);
     this.setState({ items: historial });
   };
 }

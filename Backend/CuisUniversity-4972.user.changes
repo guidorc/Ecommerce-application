@@ -18666,3 +18666,474 @@ server _ TusLibrosRestInterface listeningOn: 8080.!
 TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
 
 ----QUIT----(29 January 2022 11:29:24) CuisUniversity-4972.image priorSource: 27805800!
+
+----STARTUP---- (31 January 2022 09:56:14) as C:\Users\Guido\Desktop\Git\e-commerce-site\Backend\CuisUniversity-4972.image!
+
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 1/31/2022 10:30:11' prior: 51197913!
+listCartAction: aRequest	
+	[ | cartId result cartContent |
+		cartId := (aRequest fields at: 'cartId') asNumber.
+		
+		cartContent := tusLibros listCartIdentifiedAs: cartId.
+		
+		result := WebUtils jsonEncode: cartContent asArray.
+		
+		aRequest send200Response: result
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].
+	 ] 
+		on: Error 
+		do: [ :anError | aRequest sendResponseCode: 400 content: (anError messageText) type: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].  ]! !
+
+----SNAPSHOT----(31 January 2022 10:32:27) CuisUniversity-4972.image priorSource: 27806229!
+!Cart methodsFor: 'content' stamp: 'GRC 1/31/2022 10:42:32' prior: 51198956!
+itemsAndQuantitiesDo: aBlock
+
+	^ items do: [ :anItem | | quantity id title |
+		title _ anItem at: 'titulo'.
+		quantity _ anItem at: 'cantidad'.
+		id _ anItem at: 'id'.
+		aBlock value: title value: quantity value: id.
+	]! !
+!Cart methodsFor: 'content' stamp: 'GRC 1/31/2022 10:45:38' prior: 51200630!
+itemsAndQuantitiesDo: aBlock
+
+	^ items do: [ :anItem | | quantity title |
+		title _ anItem at: 'titulo'.
+		quantity _ anItem at: 'cantidad'.
+		aBlock value: title value: quantity.
+	]! !
+!LineItem methodsFor: 'initialization' stamp: 'GRC 1/31/2022 10:49:11' prior: 51188928!
+initializeOf: anItem quantity: aQuantity total: aTotal
+
+	item := anItem.
+	quantity := aQuantity.
+	total := aTotal
+
+! !
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'GRC 1/31/2022 10:55:05'!
+ERROR!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'GRC 1/31/2022 10:55:05'!
+ERROR!
+!Cart methodsFor: 'content' stamp: 'GRC 1/31/2022 10:56:42' prior: 51200640!
+itemsAndQuantitiesDo: aBlock
+
+	^ items do: [ :anItem |
+		aBlock value: anItem.
+	]! !
+!Cashier methodsFor: 'checkout - private' stamp: 'GRC 1/31/2022 10:57:11' prior: 51188746!
+createTicket
+
+	| lineItems |
+
+	lineItems := OrderedCollection new.
+	cart itemsAndQuantitiesDo: [ :anItem :aQuantity |
+		lineItems add: (self createLineItemOf: anItem)].
+
+	ticket := Ticket of: lineItems
+	! !
+!Cashier methodsFor: 'checkout - private' stamp: 'GRC 1/31/2022 10:57:41'!
+createLineItemOf: anItem
+
+	^LineItem of: anItem total: (self totalOf: anItem)! !
+!Cashier methodsFor: 'checkout - private' stamp: 'GRC 1/31/2022 11:00:06' prior: 51200677!
+createLineItemOf: anItem
+
+	^LineItem of: anItem total: (cart totalOf: anItem)! !
+!Cart methodsFor: 'content' stamp: 'GRC 1/31/2022 11:01:14'!
+totalOf: anItem
+
+	^(anItem at: 'precio') * (anItem at: 'cantidad'). ! !
+!Cart methodsFor: 'content' stamp: 'GRC 1/31/2022 11:01:16' prior: 51200688!
+totalOf: anItem
+
+	^(anItem at: 'precio') * (anItem at: 'cantidad'). ! !
+!Cashier methodsFor: 'checkout - private' stamp: 'GRC 1/31/2022 11:01:39' prior: 51200668!
+createTicket
+
+	| lineItems |
+
+	lineItems := OrderedCollection new.
+	cart itemsAndQuantitiesDo: [ :anItem |
+		lineItems add: (self createLineItemOf: anItem)].
+
+	ticket := Ticket of: lineItems
+	! !
+!LineItem class methodsFor: 'instance creation' stamp: 'GRC 1/31/2022 11:02:46'!
+of: anItem total: aTotal
+
+	^self new initializeOf: anItem total: aTotal
+
+! !
+!LineItem methodsFor: 'initialization' stamp: 'GRC 1/31/2022 11:03:02'!
+initializeOf: anItem total: aTotal
+
+	item := anItem.
+	total := aTotal.
+
+! !
+!LineItem methodsFor: 'accessing' stamp: 'GRC 1/31/2022 11:04:45'!
+title
+
+	^ item! !
+
+!methodRemoval: LineItem #item stamp: 'GRC 1/31/2022 11:04:45'!
+item
+
+	^ item!
+
+!classDefinition: #LineItem category: 'TusLibros-Model' stamp: 'GRC 1/31/2022 11:04:54'!
+Object subclass: #LineItem
+	instanceVariableNames: 'item quantity total title'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros-Model'!
+!LineItem methodsFor: 'accessing' stamp: 'GRC 1/31/2022 11:04:52' prior: 51200718!
+title
+
+	^ title.! !
+!LineItem methodsFor: 'accessing' stamp: 'GRC 1/31/2022 11:04:58' prior: 51200732!
+title
+
+	^ title.! !
+!LineItem methodsFor: 'accessing' stamp: 'GRC 1/31/2022 11:05:27' prior: 51200736!
+title
+
+	^ item at: 'titulo'.! !
+!LineItem methodsFor: 'accessing' stamp: 'GRC 1/31/2022 11:05:33' prior: 51200740!
+title
+
+	^item at: 'titulo'.! !
+!Ticket methodsFor: 'line items' stamp: 'GRC 1/31/2022 11:06:06' prior: 51199999!
+items
+
+	| result |
+	
+	result _ OrderedCollection new.
+	
+	lineItems do: [:anItem | | item |
+		item _ Dictionary new.
+		item at: 'id' put: anItem id.
+		item at: 'title' put: anItem 	item.
+		item at: 'quantity' put: anItem quantity.
+		item at: 'total' put: anItem total.
+		result add: item.
+	].
+
+	^result.! !
+!LineItem methodsFor: 'accessing' stamp: 'GRC 1/31/2022 11:06:19'!
+id
+
+	^item at: 'id'.! !
+!LineItem methodsFor: 'accessing' stamp: 'GRC 1/31/2022 11:06:44' prior: 51188921!
+quantity
+
+	^item at: 'cantidad'.! !
+!SalesBook methodsFor: 'list purchases' stamp: 'GRC 1/31/2022 11:12:20' prior: 51189072!
+register: aSale on: userPurchases
+
+	| total |
+
+	total _ 0.
+
+	aSale lineItemsDo: [ :aLineItem | | oldTotal newTotal |
+				oldTotal := userPurchases at: aLineItem id ifAbsentPut: [ 0 ].
+				newTotal := oldTotal + aLineItem total.
+				total _ total + newTotal.
+				userPurchases at: aLineItem id put: aLineItem].
+			
+	^total.! !
+!LineItem methodsFor: 'accessing' stamp: 'GRC 1/31/2022 11:14:27'!
+asDictionary
+
+	^Dictionary at: 'id' put: self id. ! !
+!LineItem methodsFor: 'accessing' stamp: 'GRC 1/31/2022 11:16:30' prior: 51200781!
+asDictionary
+
+	| result |
+
+	result _ Dictionary new.
+	result at: 'id' put: self id.
+	result at: 'title' put: self title.
+	result at: 'quantity' put: self quantity.
+	result at: 'total' put: self total.
+	^result.! !
+!SalesBook methodsFor: 'list purchases' stamp: 'GRC 1/31/2022 11:16:57' prior: 51200768!
+register: aSale on: userPurchases
+
+	| total |
+
+	total _ 0.
+
+	aSale lineItemsDo: [ :aLineItem | | oldTotal newTotal |
+				oldTotal := userPurchases at: aLineItem id ifAbsentPut: [ 0 ].
+				newTotal := oldTotal + aLineItem total.
+				total _ total + newTotal.
+				userPurchases at: aLineItem id put: aLineItem asDictionary].
+			
+	^total.! !
+!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 1/31/2022 11:17:58' prior: 51200545!
+listPurchasesAction: aRequest
+	[ | clientId password purchases result |
+		clientId := aRequest fields at: 'clientId'.
+		password := aRequest fields at: 'password'.
+		
+		purchases := tusLibros listPurchasesOf: clientId authenticatingWith: password.
+		
+		result := WebUtils jsonEncode: purchases.
+		
+		aRequest send200Response: result
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+	 ] 
+		on: Error 
+		do: [ :anError | aRequest sendResponseCode: 400 content: (anError messageText) type: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].  ]! !
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+----QUIT----(31 January 2022 11:18:34) CuisUniversity-4972.image priorSource: 27807237!
+
+----STARTUP---- (31 January 2022 12:22:52) as C:\Users\Guido\Desktop\Git\e-commerce-site\Backend\CuisUniversity-4972.image!
+
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'GRC 1/31/2022 12:23:38' prior: 51189506!
+listPurchasesOf: aUser authenticatingWith: aPassword
+
+	| result |
+	
+	result _ OrderedCollection new.
+
+	self if: aUser authenticatesWith: aPassword do: [
+		salesBook listPurchasesOf: aUser on: result. 
+	].
+
+	^result.! !
+!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 1/31/2022 12:23:50' prior: 51200810!
+listPurchasesAction: aRequest
+	[ | clientId password purchases result |
+		clientId := aRequest fields at: 'clientId'.
+		password := aRequest fields at: 'password'.
+		
+		purchases := tusLibros listPurchasesOf: clientId authenticatingWith: password.
+		
+		result := WebUtils jsonEncode: purchases asArray.
+		
+		aRequest send200Response: result
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+	 ] 
+		on: Error 
+		do: [ :anError | aRequest sendResponseCode: 400 content: (anError messageText) type: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].  ]! !
+!SalesBook methodsFor: 'list purchases' stamp: 'GRC 1/31/2022 12:24:24' prior: 51189060!
+listPurchasesOf: aUser on: userPurchases
+
+	| total |
+	
+	total _ 0.
+
+	^sales inject: userPurchases
+		into: [ :purchases :aSale |
+			(aSale wasDoneBy: aUser) ifTrue: [ total _ total + (self register: aSale on: purchases)].
+			purchases add: total.
+			purchases.
+		].! !
+!SalesBook methodsFor: 'list purchases' stamp: 'GRC 1/31/2022 12:24:37' prior: 51200796!
+register: aSale on: userPurchases
+
+	| total |
+
+	total _ 0.
+
+	aSale lineItemsDo: [ :aLineItem | | oldTotal newTotal |
+				oldTotal := userPurchases at: aLineItem id ifAbsentPut: [ 0 ].
+				newTotal := oldTotal + aLineItem total.
+				total _ total + newTotal.
+				userPurchases add: aLineItem asDictionary].
+			
+	^total.! !
+!OrderedCollection methodsFor: 'enumerating' stamp: 'jmv 11/30/2014 11:52' prior: 50788125 overrides: 16906753!
+select: aBlock 
+	"Evaluate aBlock with each of my elements as the argument. Collect into
+	a new collection like the receiver, only those elements for which aBlock
+	evaluates to true."
+
+	| newCollection element |
+	newCollection _ self species new.
+	firstIndex to: lastIndex do: [ :index |
+		(aBlock value: (element _ array at: index))
+			ifTrue: [ newCollection addLast: element ]].
+	^ newCollection! !
+!SalesBook methodsFor: 'list purchases' stamp: 'GRC 1/31/2022 12:27:30' prior: 51200895!
+register: aSale on: userPurchases
+
+	| total |
+
+	total _ 0.
+
+	aSale lineItemsDo: [ :aLineItem | | oldTotal newTotal |
+		oldTotal := userPurchases at: aLineItem id ifAbsentPut: [ 0 ].
+		newTotal := oldTotal + aLineItem total.
+		total _ total + newTotal.
+		userPurchases add: aLineItem asDictionary
+	].
+			
+	^total.! !
+!SalesBook methodsFor: 'list purchases' stamp: 'GRC 1/31/2022 12:31:02' prior: 51200883!
+listPurchasesOf: aUser on: userPurchases
+
+	| total |
+	
+	total _ 0.
+
+	sales inject: userPurchases
+		into: [ :purchases :aSale |
+			(aSale wasDoneBy: aUser) ifTrue: [ total _ total + (self register: aSale on: purchases)].
+			purchases.
+		].
+	
+	userPurchases add: total.
+	^userPurchases.! !
+!SalesBook methodsFor: 'list purchases' stamp: 'GRC 1/31/2022 12:31:29' prior: 51200925!
+register: aSale on: userPurchases
+
+	| total |
+
+	total _ 0.
+
+	aSale lineItemsDo: [ :aLineItem | 
+		total _ total + aLineItem total.
+		userPurchases add: aLineItem asDictionary
+	].
+			
+	^total.! !
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!Ticket methodsFor: 'line items' stamp: 'GRC 1/31/2022 12:35:56' prior: 51200748!
+items
+
+	| result |
+	
+	result _ OrderedCollection new.
+	
+	lineItems do: [:anItem | | item |
+		item _ Dictionary new.
+		item at: 'id' put: anItem id.
+		item at: 'title' put: anItem 	title.
+		item at: 'quantity' put: anItem quantity.
+		item at: 'total' put: anItem total.
+		result add: item.
+	].
+
+	^result.! !
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!SalesBook methodsFor: 'list purchases' stamp: 'GRC 1/31/2022 12:47:00' prior: 51200938!
+listPurchasesOf: aUser on: userPurchases
+
+	| total totalAsDiccEntry |
+	
+	total _ 0.
+	totalAsDiccEntry _ Dictionary new.
+
+	sales inject: userPurchases
+		into: [ :purchases :aSale |
+			(aSale wasDoneBy: aUser) ifTrue: [ total _ total + (self register: aSale on: purchases)].
+			purchases.
+		].
+	
+	userPurchases add: total.
+	^userPurchases.! !
+!SalesBook methodsFor: 'list purchases' stamp: 'GRC 1/31/2022 12:48:04' prior: 51200982!
+listPurchasesOf: aUser on: userPurchases
+
+	| total totalAsDiccEntry |
+	
+	total _ 0.
+	totalAsDiccEntry _ Dictionary new.
+
+	sales inject: userPurchases
+		into: [ :purchases :aSale |
+			(aSale wasDoneBy: aUser) ifTrue: [ total _ total + (self register: aSale on: purchases)].
+			purchases.
+		].
+	
+	totalAsDiccEntry at: 'id' put: 'total'.
+	totalAsDiccEntry at: 'total' put: total.
+	userPurchases add: totalAsDiccEntry.
+	^userPurchases.! !
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 1/31/2022 12:55:59' prior: 51200858!
+listPurchasesAction: aRequest
+	[ | clientId password purchases result |
+		clientId := aRequest fields at: 'clientId'.
+		password := aRequest fields at: 'password'.
+		
+		purchases := tusLibros listPurchasesOf: clientId authenticatingWith: password.
+		
+		result := WebUtils jsonEncode: purchases.
+		
+		aRequest send200Response: result
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+	 ] 
+		on: Error 
+		do: [ :anError | aRequest sendResponseCode: 400 content: (anError messageText) type: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].  ]! !
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 1/31/2022 12:56:57' prior: 51201021!
+listPurchasesAction: aRequest
+	[ | clientId password purchases result |
+		clientId := aRequest fields at: 'clientId'.
+		password := aRequest fields at: 'password'.
+		
+		purchases := tusLibros listPurchasesOf: clientId authenticatingWith: password.
+		
+		result := WebUtils jsonEncode: purchases asArray.
+		
+		aRequest send200Response: result
+			contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+	 ] 
+		on: Error 
+		do: [ :anError | aRequest sendResponseCode: 400 content: (anError messageText) type: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].  ]! !
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+server _ TusLibrosRestInterface listeningOn: 8080.!
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+----SNAPSHOT----(31 January 2022 13:03:44) CuisUniversity-4972.image priorSource: 27814057!
+
+----QUIT----(31 January 2022 13:04:13) CuisUniversity-4972.image priorSource: 27821869!

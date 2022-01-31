@@ -39,19 +39,22 @@ content
 
 	^items copy! !
 
-!Cart methodsFor: 'content' stamp: 'GRC 12/10/2021 17:17:09'!
+!Cart methodsFor: 'content' stamp: 'GRC 1/31/2022 10:56:42'!
 itemsAndQuantitiesDo: aBlock
 
-	^ items do: [ :anItem | | price quantity |
-		price _ anItem at: 'titulo'.
-		quantity _ anItem at: 'cantidad'.
-		aBlock value: price value: quantity.
+	^ items do: [ :anItem |
+		aBlock value: anItem.
 	]! !
 
 !Cart methodsFor: 'content' stamp: 'HernanWilkinson 6/17/2013 17:45'!
 occurrencesOf: anItem
 
 	^items occurrencesOf: anItem  ! !
+
+!Cart methodsFor: 'content' stamp: 'GRC 1/31/2022 11:01:16'!
+totalOf: anItem
+
+	^(anItem at: 'precio') * (anItem at: 'cantidad'). ! !
 
 
 !Cart methodsFor: 'initialization' stamp: 'GRC 12/8/2021 18:16:13'!
@@ -263,6 +266,11 @@ Object subclass: #Cashier
 	poolDictionaries: ''
 	category: 'TusLibros-Model'!
 
+!Cashier methodsFor: 'checkout - private' stamp: 'GRC 1/31/2022 11:00:06'!
+createLineItemOf: anItem
+
+	^LineItem of: anItem total: (cart totalOf: anItem)! !
+
 !Cashier methodsFor: 'checkout - private' stamp: 'GRC 12/10/2021 17:09:08'!
 createLineItemOf: anItem quantity: aQuantity
 
@@ -274,14 +282,14 @@ createSale
 	^ Sale doneBy: owner certifiedWith: ticket
 ! !
 
-!Cashier methodsFor: 'checkout - private' stamp: 'GRC 11/29/2021 09:43:49'!
+!Cashier methodsFor: 'checkout - private' stamp: 'GRC 1/31/2022 11:01:39'!
 createTicket
 
 	| lineItems |
 
 	lineItems := OrderedCollection new.
-	cart itemsAndQuantitiesDo: [ :anItem :aQuantity |
-		lineItems add: (self createLineItemOf: anItem quantity: aQuantity)].
+	cart itemsAndQuantitiesDo: [ :anItem |
+		lineItems add: (self createLineItemOf: anItem)].
 
 	ticket := Ticket of: lineItems
 	! !
@@ -429,20 +437,37 @@ expiringOn: aMonth
 
 !classDefinition: #LineItem category: 'TusLibros-Model'!
 Object subclass: #LineItem
-	instanceVariableNames: 'item quantity total'
+	instanceVariableNames: 'item quantity total title'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros-Model'!
 
-!LineItem methodsFor: 'accessing' stamp: 'HernanWilkinson 6/22/2013 12:33'!
-item
+!LineItem methodsFor: 'accessing' stamp: 'GRC 1/31/2022 11:16:30'!
+asDictionary
 
-	^ item! !
+	| result |
 
-!LineItem methodsFor: 'accessing' stamp: 'GRC 11/15/2021 16:03:22'!
+	result _ Dictionary new.
+	result at: 'id' put: self id.
+	result at: 'title' put: self title.
+	result at: 'quantity' put: self quantity.
+	result at: 'total' put: self total.
+	^result.! !
+
+!LineItem methodsFor: 'accessing' stamp: 'GRC 1/31/2022 11:06:19'!
+id
+
+	^item at: 'id'.! !
+
+!LineItem methodsFor: 'accessing' stamp: 'GRC 1/31/2022 11:06:44'!
 quantity
 
-	^quantity.! !
+	^item at: 'cantidad'.! !
+
+!LineItem methodsFor: 'accessing' stamp: 'GRC 1/31/2022 11:05:33'!
+title
+
+	^item at: 'titulo'.! !
 
 !LineItem methodsFor: 'accessing' stamp: 'GRC 12/10/2021 17:08:43'!
 total
@@ -450,12 +475,20 @@ total
 	^ total! !
 
 
-!LineItem methodsFor: 'initialization' stamp: 'GRC 11/29/2021 09:54:03'!
+!LineItem methodsFor: 'initialization' stamp: 'GRC 1/31/2022 10:49:11'!
 initializeOf: anItem quantity: aQuantity total: aTotal
 
 	item := anItem.
 	quantity := aQuantity.
 	total := aTotal
+
+! !
+
+!LineItem methodsFor: 'initialization' stamp: 'GRC 1/31/2022 11:03:02'!
+initializeOf: anItem total: aTotal
+
+	item := anItem.
+	total := aTotal.
 
 ! !
 
@@ -469,6 +502,13 @@ LineItem class
 of: anItem quantity: aQuantity total: aTotal
 
 	^self new initializeOf: anItem quantity: aQuantity total: aTotal
+
+! !
+
+!LineItem class methodsFor: 'instance creation' stamp: 'GRC 1/31/2022 11:02:46'!
+of: anItem total: aTotal
+
+	^self new initializeOf: anItem total: aTotal
 
 ! !
 
@@ -570,32 +610,36 @@ add: aSale
 	sales add: aSale.! !
 
 
-!SalesBook methodsFor: 'list purchases' stamp: 'GRC 11/29/2021 16:45:49'!
+!SalesBook methodsFor: 'list purchases' stamp: 'GRC 1/31/2022 12:48:04'!
 listPurchasesOf: aUser on: userPurchases
 
-	| total |
+	| total totalAsDiccEntry |
 	
 	total _ 0.
+	totalAsDiccEntry _ Dictionary new.
 
-	^sales inject: userPurchases
+	sales inject: userPurchases
 		into: [ :purchases :aSale |
 			(aSale wasDoneBy: aUser) ifTrue: [ total _ total + (self register: aSale on: purchases)].
-			purchases at: 'total amount' put: total.
 			purchases.
-		].! !
+		].
+	
+	totalAsDiccEntry at: 'id' put: 'total'.
+	totalAsDiccEntry at: 'total' put: total.
+	userPurchases add: totalAsDiccEntry.
+	^userPurchases.! !
 
-!SalesBook methodsFor: 'list purchases' stamp: 'GRC 11/29/2021 10:04:25'!
+!SalesBook methodsFor: 'list purchases' stamp: 'GRC 1/31/2022 12:31:29'!
 register: aSale on: userPurchases
 
 	| total |
 
 	total _ 0.
 
-	aSale lineItemsDo: [ :aLineItem | | oldTotal newTotal |
-				oldTotal := userPurchases at: aLineItem item ifAbsentPut: [ 0 ].
-				newTotal := oldTotal + aLineItem total.
-				total _ total + newTotal.
-				userPurchases at: aLineItem item put: aLineItem quantity].
+	aSale lineItemsDo: [ :aLineItem | 
+		total _ total + aLineItem total.
+		userPurchases add: aLineItem asDictionary
+	].
 			
 	^total.! !
 
@@ -624,7 +668,7 @@ initializeOf: aCollectionOfLineItems
 	lineItems := aCollectionOfLineItems ! !
 
 
-!Ticket methodsFor: 'line items' stamp: 'GRC 12/11/2021 11:16:20'!
+!Ticket methodsFor: 'line items' stamp: 'GRC 1/31/2022 12:35:56'!
 items
 
 	| result |
@@ -633,7 +677,8 @@ items
 	
 	lineItems do: [:anItem | | item |
 		item _ Dictionary new.
-		item at: 'item' put: anItem 	item.
+		item at: 'id' put: anItem id.
+		item at: 'title' put: anItem 	title.
 		item at: 'quantity' put: anItem quantity.
 		item at: 'total' put: anItem total.
 		result add: item.
@@ -792,16 +837,12 @@ createCartAction: aRequest
 		do: [ :anError | aRequest sendResponseCode: 400 content: (anError messageText) type: 'application/json; charset=utf-8' do: [:resp | 
 					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]. ]! !
 
-!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 12/8/2021 18:27:19'!
+!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 1/31/2022 10:30:11'!
 listCartAction: aRequest	
-	[ | cartId result cartContent resultDict |
+	[ | cartId result cartContent |
 		cartId := (aRequest fields at: 'cartId') asNumber.
 		
 		cartContent := tusLibros listCartIdentifiedAs: cartId.
-
-		"resultDict := Dictionary new.
-		cartContent contents keysAndValuesDo: [ :anItem :aQuantity | resultDict add: anItem->aQuantity ].
-		result := WebUtils jsonEncode: resultDict."
 		
 		result := WebUtils jsonEncode: cartContent asArray.
 		
@@ -813,7 +854,7 @@ listCartAction: aRequest
 		do: [ :anError | aRequest sendResponseCode: 400 content: (anError messageText) type: 'application/json; charset=utf-8' do: [:resp | 
 					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].  ]! !
 
-!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 12/30/2021 14:35:19'!
+!TusLibrosRestInterface methodsFor: 'requests' stamp: 'GRC 1/31/2022 12:56:57'!
 listPurchasesAction: aRequest
 	[ | clientId password purchases result |
 		clientId := aRequest fields at: 'clientId'.
@@ -978,6 +1019,11 @@ add: anAmount of: aBook toCartIdentifiedAs: aCartId
 
 	self withCartSessionIdentifiedAs: aCartId do: [ :cartSession | cartSession addToCart: anAmount of: aBook ]! !
 
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'GRC 11/15/2021 20:44:20'!
+catalog
+
+	^catalog copy.! !
+
 !TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'GRC 11/28/2021 15:51:29'!
 checkOutCartIdentifiedAs: aCartId withCreditCardNumbered: aCreditCartNumber ownedBy: anOwner expiringOn: anExpirationMonthOfYear
 
@@ -1005,12 +1051,12 @@ listCartIdentifiedAs: aCartId
 
 	^ self withCartSessionIdentifiedAs: aCartId do: [ :cartSession | cartSession cartContent ]! !
 
-!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'GRC 11/29/2021 16:32:47'!
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'GRC 1/31/2022 12:23:38'!
 listPurchasesOf: aUser authenticatingWith: aPassword
 
 	| result |
 	
-	result _ Dictionary new.
+	result _ OrderedCollection new.
 
 	self if: aUser authenticatesWith: aPassword do: [
 		salesBook listPurchasesOf: aUser on: result. 
@@ -1051,12 +1097,6 @@ initializeAuthenticatingWith: aValidUsersAndPasswords
 
 	cartSessions := Dictionary new.
 	lastId := 0.! !
-
-
-!TusLibrosSystemFacade methodsFor: 'private' stamp: 'GRC 11/15/2021 20:44:20'!
-catalog
-
-	^catalog copy.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
