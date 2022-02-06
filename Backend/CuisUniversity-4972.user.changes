@@ -19146,3 +19146,10 @@ server _ TusLibrosRestInterface listeningOn: 8080.!
 TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
 
 ----QUIT----(3 February 2022 18:39:29) CuisUniversity-4972.image priorSource: 27821962!
+
+----STARTUP---- (6 February 2022 16:20:09) as C:\Users\Guido\Desktop\Git\e-commerce-site\Backend\CuisUniversity-4972.image!
+
+
+TusLibrosRestInterface allInstancesDo: [:aServer | aServer destroy].!
+
+----QUIT----(6 February 2022 16:29:19) CuisUniversity-4972.image priorSource: 27822301!
